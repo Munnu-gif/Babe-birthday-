@@ -9,11 +9,19 @@
     font-family: 'Segoe UI', sans-serif;
     background: #000;
     color: #fff;
+    text-align: center;
     overflow-x: hidden;
   }
   h1,h2,h3 { margin: 10px 0; }
-
   .hidden { display: none; }
+
+  /* Animations */
+  .fadeIn { animation: fadeIn 1s forwards; }
+  .fadeOut { animation: fadeOut 1s forwards; }
+  @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+  @keyframes fadeOut { from{opacity:1;} to{opacity:0;} }
+  .slideIn { animation: slideIn 1s forwards; }
+  @keyframes slideIn { from{transform:translateY(50px); opacity:0;} to{transform:translateY(0); opacity:1;} }
 
   /* Enter Name */
   #enterName {
@@ -23,7 +31,6 @@
     justify-content: center;
     align-items: center;
     background: linear-gradient(135deg,#111,#222);
-    animation: fadeIn 2s;
   }
   #nameInput {
     padding: 10px;
@@ -45,23 +52,16 @@
 
   /* Calendar */
   #calendar {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
     padding: 20px;
   }
-  .month {
-    margin-right: 30px;
-  }
-  .month h2 {
-    text-align: center;
-    color: pink;
-  }
+  .month h2 { color: pink; }
   .cal {
     display: grid;
     grid-template-columns: repeat(7, 50px);
-    gap: 10px;
+    gap: 8px;
     justify-content: center;
+    margin: auto;
+    max-width: 400px;
   }
   .day {
     width: 50px; height: 50px;
@@ -79,34 +79,35 @@
   .highlight::after {
     content: "❤️";
     position: absolute;
-    top: -10px; left: -12px;
-    font-size: 40px;
+    top: -12px; left: -12px;
+    font-size: 38px;
     z-index: -1;
   }
 
   /* Cake */
-  #cake { text-align: center; margin-top: 20px; }
+  #cake { margin-top: 20px; }
   .cake {
     position: relative;
     margin: 20px auto;
-    width: 200px; height: 120px;
-    background: pink;
-    border-radius: 50% / 20%;
-    overflow: hidden;
+    width: 220px;
+    height: 160px;
   }
-  .cake::before {
-    content: '';
-    position: absolute;
-    top: -40px; left: 0;
-    width: 100%; height: 40px;
-    background: #ff99cc;
-    border-radius: 50%;
+  .layer {
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    margin: 2px 0;
+    position: relative;
   }
+  .layer1 { background: #ff99cc; }
+  .layer2 { background: #ffccdd; }
+  .layer3 { background: #ffe6ee; }
+
   .candle {
     width: 12px; height: 40px;
     background: yellow;
     position: absolute;
-    top: -60px; left: 50%;
+    top: -50px; left: 50%;
     transform: translateX(-50%);
     border-radius: 4px;
   }
@@ -115,7 +116,7 @@
     background: orange;
     border-radius: 50%;
     position: absolute;
-    top: -75px; left: 50%;
+    top: -65px; left: 50%;
     transform: translateX(-50%);
     animation: flicker 0.5s infinite;
   }
@@ -133,16 +134,33 @@
     border-radius: 8px;
     cursor: pointer;
   }
-  #pieces { display: none; }
+  #pieces {
+    display: none;
+    margin-top: 20px;
+  }
+  .piece {
+    display: inline-block;
+    width: 60px; height: 60px;
+    margin: 5px;
+    background: pink;
+    border-radius: 10px;
+    animation: pieceAnim 1s forwards;
+  }
+  @keyframes pieceAnim {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
 
-  /* DIY Gift Card */
+  /* Gift Card */
   #card {
-    width: 320px; margin: 30px auto;
-    perspective: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
   }
   .card-inner {
     position: relative;
-    width: 100%; height: 200px;
+    width: 320px; height: 200px;
     text-align: center;
     transition: transform 1s;
     transform-style: preserve-3d;
@@ -170,18 +188,23 @@
   }
   .flipped { transform: rotateY(180deg); }
 
-  /* Wish Button */
+  /* Wish */
+  #wishBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+  }
   #wishBtn {
     padding: 10px 20px;
     background: #ff0077;
     border: none; border-radius: 8px;
     color: #fff;
-    margin: 20px;
     cursor: pointer;
   }
   #wishText {
     font-size: 18px;
-    animation: fadeIn 3s;
+    margin-top: 20px;
   }
 
   /* Ending */
@@ -195,7 +218,6 @@
     color: pink;
     animation: fadeIn 3s;
   }
-  @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
 </style>
 </head>
 <body>
@@ -212,23 +234,33 @@
   <div class="month">
     <h2>September 2025</h2>
     <div class="cal">
-      <div class="day">25</div>
-      <div class="day">26</div>
+      <div class="day">1</div><div class="day">2</div><div class="day">3</div>
+      <div class="day">4</div><div class="day">5</div><div class="day">6</div>
+      <div class="day">7</div><div class="day">8</div><div class="day">9</div>
+      <div class="day">10</div><div class="day">11</div><div class="day">12</div>
+      <div class="day">13</div><div class="day">14</div><div class="day">15</div>
+      <div class="day">16</div><div class="day">17</div><div class="day">18</div>
+      <div class="day">19</div><div class="day">20</div><div class="day">21</div>
+      <div class="day">22</div><div class="day">23</div><div class="day">24</div>
+      <div class="day">25</div><div class="day">26</div>
       <div class="day highlight">27</div>
-      <div class="day">28</div>
+      <div class="day">28</div><div class="day">29</div><div class="day">30</div>
     </div>
   </div>
   <div id="cake">
     <h2>🎂 Happy Birthday Meri Sehzadii Ji 💓🥀✨</h2>
     <div class="cake">
+      <div class="layer layer1"></div>
+      <div class="layer layer2"></div>
+      <div class="layer layer3"></div>
       <div class="candle"></div>
       <div class="flame"></div>
     </div>
     <button id="cutBtn">Cut Cake 🍰</button>
     <div id="pieces">
-      <p>🍰 Piece 1</p>
-      <p>🍰 Piece 2</p>
-      <p>🍰 Piece 3</p>
+      <div class="piece">🍰</div>
+      <div class="piece">🍰</div>
+      <div class="piece">🍰</div>
     </div>
   </div>
 </div>
@@ -240,30 +272,30 @@
       🎂🎈 Happy Birthday Jana ✨💗
     </div>
     <div class="card-back">
-      Munnu jii, hum Aapka birthday toh aapke sath celebrate nahi kar payenge,  
-      lekin hum aapke dil me hamesha rahenge ❤️.  
-      Jab aap celebrate karengi toh samajh lijiyega hum bhi sath hi hain.  
-      Hamesha hum aapke hi rahenge chahe kuch bhi ho jaye.  
-      Hamesha aapka sath denge aur aapse mohabbat karte rahenge.  
-      Apna khayal rakhiyegaa aur is din ko dil se enjoy kijiye ❣️✨  
+      Munnu jii ,hum Aapka birthday toh aapke sath celebrate nahi kar payenge,<br>
+      lekin hum aapke dil me hamesha rahenge ❤️.<br>
+      Jab aap celebrate karengi toh samajh lijiyega k hum bhi sath hi hain.<br>
+      Hamesha hum aapke hi rahenge chahe kuch bhi ho jaye.<br>
+      Apna khayal rakhiyega aur aajka din ko dil se enjoy kijiye ❣️✨<br>
       — Miss you so much Jana 💕
     </div>
   </div>
 </div>
 
 <!-- Step 4 My Wish -->
-<div id="wishBlock" class="hidden" style="text-align:center;">
+<div id="wishBlock" class="hidden">
   <button id="wishBtn">My Wish 💌</button>
   <p id="wishText" class="hidden">
-    Hamesha mere sath rahiye… chahe jitni bhi mushkilein aaye.  
-    Mera intezaar kariyega… aur kabhi chhod kar mat jayega ❤️  
+    Hamesha mere sath rahiye… chahe jitni bhi mushkilein aaye.<br>
+    Mera intezaar kariyega… aur kabhi chhod kar mat jayega ❤️
   </p>
 </div>
 
 <!-- Step 5 Ending -->
 <div id="ending" class="hidden">
   <p>Take care Miss Ji 💕 Celebrate & enjoy your day ❣️</p>
-  <div class="bigText">Miss You Babe ✨💗Fi amanillah</div>
+  <div class="bigText">Miss You Babe ✨💗
+      Fi amanillah</div>
   <div class="bigText">From Your Bandar Khan Ji. Miya Ji</div>
 </div>
 
@@ -272,34 +304,60 @@
   startBtn.onclick = ()=>{
     let name = document.getElementById('nameInput').value.trim().toLowerCase();
     if(name === "munnu"){
-      document.getElementById('enterName').classList.add('hidden');
-      document.getElementById('calendar').classList.remove('hidden');
+      let enter = document.getElementById('enterName');
+      enter.classList.add('fadeOut');
+      setTimeout(()=>{
+        enter.classList.add('hidden');
+        let cal = document.getElementById('calendar');
+        cal.classList.remove('hidden');
+        cal.classList.add('fadeIn');
+      },1000);
     } else {
       alert("Only for Munnu ❤️");
     }
   };
 
   document.getElementById('cutBtn').onclick = ()=>{
-    document.querySelector('.cake').style.display="none";
-    document.getElementById('pieces').style.display="block";
+    let cakeDiv = document.querySelector('.cake');
+    cakeDiv.classList.add('fadeOut');
     setTimeout(()=>{
-      document.getElementById('calendar').classList.add('hidden');
-      document.getElementById('card').classList.remove('hidden');
-    },2000);
+      cakeDiv.style.display="none";
+      document.getElementById('pieces').style.display="block";
+      setTimeout(()=>{
+        document.getElementById('calendar').classList.add('fadeOut');
+        setTimeout(()=>{
+          document.getElementById('calendar').classList.add('hidden');
+          let card = document.getElementById('card');
+          card.classList.remove('hidden');
+          card.classList.add('fadeIn');
+        },1000);
+      },2000);
+    },1000);
   };
 
   document.getElementById('cardInner').onclick = ()=>{
     document.getElementById('cardInner').classList.toggle('flipped');
     setTimeout(()=>{
-      document.getElementById('card').classList.add('hidden');
-      document.getElementById('wishBlock').classList.remove('hidden');
+      document.getElementById('card').classList.add('fadeOut');
+      setTimeout(()=>{
+        document.getElementById('card').classList.add('hidden');
+        let wish = document.getElementById('wishBlock');
+        wish.classList.remove('hidden');
+        wish.classList.add('slideIn');
+      },1000);
     },4000);
   };
 
   document.getElementById('wishBtn').onclick = ()=>{
     document.getElementById('wishText').classList.remove('hidden');
+    document.getElementById('wishText').classList.add('fadeIn');
     setTimeout(()=>{
-      document.getElementById('ending').classList.remove('hidden');
+      document.getElementById('wishBlock').classList.add('fadeOut');
+      setTimeout(()=>{
+        document.getElementById('wishBlock').classList.add('hidden');
+        document.getElementById('ending').classList.remove('hidden');
+        document.getElementById('ending').classList.add('fadeIn');
+      },1000);
     },4000);
   };
 </script>
