@@ -1,265 +1,502 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Happy Birthday Munnu ❤️</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Happy Birthday — Surprise</title>
 <style>
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', cursive, sans-serif;
-    background: #000;
-    color: #fff;
-    text-align: center;
-    overflow: hidden;
+  :root{
+    --pink:#ff7ab6; --deep:#120012; --white:#fff; --accent:#ff4da6;
   }
-  h1,h2,h3 { margin: 10px 0; }
-  .hidden { display: none; }
-
-  /* Animations */
-  .fadeIn { animation: fadeIn 1s forwards; }
-  .fadeOut { animation: fadeOut 1s forwards; }
-  .slideIn { animation: slideIn 1s forwards; }
-  @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
-  @keyframes fadeOut { from{opacity:1;} to{opacity:0;} }
-  @keyframes slideIn { from{transform:translateY(50px);opacity:0;} to{transform:translateY(0);opacity:1;} }
-
-  /* Backgrounds */
-  .bg1 { background:url('https://i.ibb.co/SrqvYrS/romantic-bg.gif') center/cover no-repeat fixed; }
-  .bg2 { background:url('https://i.ibb.co/gM8r0qP/heart-bg.gif') center/cover no-repeat fixed; }
-  .bg3 { background:url('https://i.ibb.co/pxc5CJt/fireworks.gif') center/cover no-repeat fixed; }
-
-  /* Enter Name */
-  #enterName {
-    height: 100vh;
-    display: flex; flex-direction: column;
-    justify-content: center; align-items: center;
-  }
-  #nameInput {
-    padding: 10px; font-size: 18px;
-    border-radius: 8px; border: none; outline: none;
-  }
-  #startBtn {
-    margin-top: 10px;
-    padding: 10px 20px;
-    font-size: 18px;
-    border: none; border-radius: 8px;
-    background: crimson; color: #fff; cursor: pointer;
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;
+    background: radial-gradient(ellipse at top, #1a0a1e 0%, #000 70%);
+    color:var(--white);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    overflow:hidden;
   }
 
-  /* Surprise Circle */
-  #surpriseCircle {
-    position: fixed; top:50%; left:50%;
-    transform: translate(-50%,-50%);
-    width:200px; height:200px;
-    border-radius:50%;
-    background:#fff;
-    display:flex; flex-direction:column;
-    align-items:center; justify-content:center;
-    box-shadow:0 0 30px pink;
-    animation: pop 1s forwards;
+  /* wrapper to center */
+  .stage{
+    width:100vw; height:100vh; display:flex; align-items:center; justify-content:center;
+    position:relative;
   }
-  #surpriseCircle img { width:100px; }
-  @keyframes pop { from{transform:translate(-50%,-50%) scale(0);} to{transform:translate(-50%,-50%) scale(1);} }
+  button{cursor:pointer}
 
-  /* Calendar */
-  #calendar {
-    padding: 20px;
+  /* ---------- START SCREEN ---------- */
+  #startScreen{
+    display:flex; flex-direction:column; align-items:center; gap:14px;
+    text-align:center;
   }
-  .month h2 { color: pink; }
-  .cal {
-    display: grid;
-    grid-template-columns: repeat(7, 50px);
-    gap: 6px; justify-content: center;
-    margin: auto; max-width: 400px;
+  #startScreen h1{
+    margin:0; font-size:26px; letter-spacing:0.6px;
+    text-shadow:0 6px 30px rgba(255,77,166,0.15);
   }
-  .day {
-    width: 50px; height: 50px;
-    line-height: 50px;
-    border-radius: 50%; background:#222;
+  .inputWrap{display:flex; gap:10px; align-items:center;}
+  #nameInput{
+    padding:12px 14px; border-radius:10px; border:none; outline:none;
+    font-size:16px; width:260px; background:rgba(255,255,255,0.06); color:var(--white);
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.5);
   }
-  .highlight {
-    background: red; color:#fff; font-weight: bold;
-    position: relative;
-  }
-  .highlight::after {
-    content:"❤️";
-    position:absolute; top:-15px; left:-15px;
-    font-size:38px; z-index:-1;
+  #openBtn{
+    padding:10px 18px; background:linear-gradient(90deg,var(--accent),#ff3399);
+    border:none; color:white; border-radius:10px; font-weight:600; box-shadow:0 8px 24px rgba(255,77,166,0.12);
   }
 
-  /* Cake */
-  .cake { margin:20px auto; width:220px; height:160px; position:relative; }
-  .layer { height:40px; border-radius:10px; margin:2px 0; }
-  .layer1{background:#ff99cc;} .layer2{background:#ffccdd;} .layer3{background:#ffe6ee;}
-  .candle{width:12px; height:40px; background:yellow; position:absolute; top:-50px; left:50%; transform:translateX(-50%); border-radius:4px;}
-  .flame{width:15px; height:15px; background:orange; border-radius:50%; position:absolute; top:-65px; left:50%; transform:translateX(-50%); animation:flicker .5s infinite;}
-  @keyframes flicker{0%{opacity:1;}50%{opacity:.6;transform:scale(1.2);}100%{opacity:1;}}
-  #cutBtn{margin-top:10px;padding:10px 20px;border:none;background:crimson;color:#fff;border-radius:8px;cursor:pointer;}
-  #pieces{display:none;margin-top:20px;}
-  .piece{display:inline-block;width:60px;height:60px;margin:5px;background:pink;border-radius:10px;animation:pieceAnim 1s forwards;}
-  @keyframes pieceAnim{from{transform:scale(0);opacity:0;}to{transform:scale(1);opacity:1;}}
+  /* ---------- surprise circle (teddy) ---------- */
+  #surprise{
+    position:absolute; width:260px; height:260px; border-radius:50%; display:flex;
+    flex-direction:column; align-items:center; justify-content:center;
+    background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.12), rgba(255,255,255,0.02));
+    border: 2px solid rgba(255,255,255,0.06);
+    box-shadow:0 20px 60px rgba(0,0,0,0.6), inset 0 0 30px rgba(255,255,255,0.02);
+    transform:scale(0); transition:transform .5s cubic-bezier(.2,.9,.3,1);
+  }
+  #surprise.show{transform:scale(1)}
+  .teddy{
+    font-size:60px; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.6));
+  }
+  .sur-title{margin-top:8px; font-weight:700; color:var(--accent)}
 
-  /* Card */
-  #card{display:flex;justify-content:center;align-items:center;height:100vh;}
-  .card-inner{width:320px;height:200px;transition:transform 1s;transform-style:preserve-3d;cursor:pointer;position:relative;}
-  .card-front,.card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:10px;box-shadow:0 0 20px #fff;}
-  .card-front{background:#ffdde1;display:flex;justify-content:center;align-items:center;color:crimson;font-size:20px;font-weight:bold;font-family:cursive;}
-  .card-back{background:#fff;color:#000;padding:15px;transform:rotateY(180deg);font-size:14px;}
-  .flipped{transform:rotateY(180deg);}
+  /* small helper for step text below everything */
+  .step-note{
+    position: absolute; bottom:22px; left:50%; transform:translateX(-50%);
+    color:rgba(255,255,255,0.6); font-size:13px;
+  }
 
-  /* Wish */
-  #wishBlock{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;}
-  #wishBtn{padding:10px 20px;background:#ff0077;border:none;border-radius:8px;color:#fff;cursor:pointer;}
-  #wishText{font-size:18px;margin-top:20px;}
+  /* ---------- calendar + cake stage ---------- */
+  .layout{
+    width:100%; max-width:1100px; display:flex; gap:30px; align-items:center; justify-content:center;
+    padding:30px;
+  }
+  .leftCol{width:420px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:16px; padding:18px; box-shadow:0 12px 40px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.03);}
+  .rightCol{flex:1; display:flex; flex-direction:column; align-items:center; gap:12px}
 
-  /* Ending */
-  #ending{text-align:center;margin:30px;}
-  .bigText{font-size:40px;font-weight:bold;color:pink;animation:fadeIn 3s;}
+  .monthTitle{font-size:20px; color:#ffd3ea; margin-bottom:8px; font-weight:700}
+  .calGrid{display:grid; grid-template-columns:repeat(7,48px); gap:8px; justify-content:center}
+  .calCell{width:48px;height:48px;border-radius:8px;background:rgba(255,255,255,0.03);
+    display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.8);font-weight:600}
+  .calHeader{font-size:11px;color:rgba(255,255,255,0.45); text-align:center; margin-bottom:6px}
+  .dateHighlight{
+    width:48px;height:48px;border-radius:50%; background:linear-gradient(180deg,#ff4366,#ff7ab6);
+    display:flex;align-items:center;justify-content:center; color:white; font-weight:900;
+    position:relative; box-shadow:0 8px 26px rgba(255,77,166,0.18);
+  }
+  .dateHighlight::after{
+    content:""; position:absolute; top:-18px; right:-18px; width:42px;height:42px;
+    background:rgba(255,255,255,0.04); border-radius:50%;
+  }
+  .dateHighlight .heart{position:absolute; top:-12px; left:-12px; font-size:26px; transform:translate(-4px,-2px)}
+
+  /* cake */
+  .cakeWrap{display:flex; flex-direction:column; align-items:center; gap:10px}
+  .cakeBall{width:260px; height:170px; border-radius:50%/30%; background:linear-gradient(180deg,#ff9acf,#ffd9ea);
+    box-shadow:0 18px 60px rgba(255,77,166,0.15), inset 0 -10px 30px rgba(0,0,0,0.06);
+    position:relative; display:flex; align-items:center; justify-content:center}
+  .candleStick{position:absolute; top:-44px; width:12px; height:48px; background:#ffd34d; border-radius:6px; left:50%; transform:translateX(-50%)}
+  .flame{position:absolute; top:-64px; left:50%; transform:translateX(-50%); width:18px;height:22px;border-radius:50%; background: radial-gradient(circle, #ffe66d 0%, #ff8f3d 70%); box-shadow:0 6px 18px rgba(255,140,60,0.35); animation:flick 0.5s infinite}
+  @keyframes flick{0%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.18)}100%{transform:translateX(-50%) scale(1)}}
+
+  #cutCakeBtn{padding:12px 20px;border-radius:12px;background:linear-gradient(90deg,#ff6b99,#ff3f7a);border:none;color:white;font-weight:700}
+
+  /* pieces anim */
+  .piecesRow{margin-top:12px; display:flex; gap:12px; justify-content:center; opacity:0; transform:translateY(10px); transition:all .6s}
+  .piecesRow.show{opacity:1; transform:translateY(0)}
+  .piece{
+    width:72px;height:72px;border-radius:12px;background:linear-gradient(180deg,#ffd4e6,#ffb6d6); display:flex;align-items:center;justify-content:center;
+    font-size:28px; box-shadow:0 8px 26px rgba(255,77,166,0.12)
+  }
+
+  /* fireworks/confetti */
+  .confetti{
+    position:fixed; left:0; top:0; width:100%; height:100%; pointer-events:none;
+  }
+
+  /* --------- CARD stage --------- */
+  .cardStage{display:flex; align-items:center; justify-content:center; height:100vh}
+  .cardInner{
+    width:360px; height:240px; perspective:1100px; cursor:pointer;
+  }
+  .cardFace{
+    width:100%; height:100%; border-radius:12px; position:absolute; left:0; top:0;
+    backface-visibility:hidden; box-shadow:0 12px 48px rgba(0,0,0,0.7);
+  }
+  .front{
+    background:linear-gradient(180deg,#ffdde6,#ffccd9);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; color:#5b0020; font-weight:800;
+    font-size:22px; font-family:cursive;
+  }
+  .back{
+    background:#fff; color:#111; transform:rotateY(180deg); padding:18px; font-size:15px; line-height:1.4; text-align:left;
+  }
+  .cardInnerInner{position:relative}
+  .flipped{transform:rotateY(180deg)}
+
+  /* small corner envelope */
+  #envelope{
+    position:fixed; top:18px; right:18px; width:56px;height:44px;border-radius:8px; background:linear-gradient(180deg,#fff,#ffdfe8);
+    display:flex; align-items:center; justify-content:center; color:#c0286f; font-weight:800; box-shadow:0 8px 30px rgba(0,0,0,0.5); cursor:pointer; transform:scale(.8); opacity:0; transition:all .45s;
+  }
+  #envelope.show{opacity:1; transform:scale(1)}
+
+  /* My Wish stage */
+  .wishStage{display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; gap:18px}
+  #wishButton{
+    padding:14px 22px; border-radius:12px; background:linear-gradient(90deg,#ff4da6,#ff0077); border:none; color:white; font-weight:800; font-size:16px;
+    box-shadow:0 18px 40px rgba(255,77,166,0.14);
+  }
+  #wishText{max-width:720px; margin-top:8px; font-size:18px; color:#ffd8eb; display:none; text-align:center; line-height:1.6}
+
+  /* ending screen */
+  .ending{display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh}
+  .big{
+    font-size:44px; font-weight:900; color:#ffd0ea; text-shadow:0 20px 60px rgba(255,0,120,0.12);
+  }
+
+  /* small responsive tweaks */
+  @media (max-width:900px){
+    .layout{flex-direction:column; padding:18px}
+    .leftCol{width:100%}
+    .calGrid{grid-template-columns:repeat(7,40px)}
+    .calCell{width:40px;height:40px}
+    .dateHighlight{width:40px;height:40px}
+    .cakeBall{width:200px;height:140px}
+    .cardInner{width:300px}
+  }
 </style>
 </head>
-<body class="bg1">
+<body>
 
-<!-- Step 1 -->
-<div id="enterName">
-  <h1>Enter Her Name to Unlock 🎁</h1>
-  <input type="text" id="nameInput" placeholder="Enter name...">
-  <button id="startBtn">Open</button>
-</div>
+<!-- STAGE WRAPPERS -->
+<div id="stage" class="stage">
 
-<!-- Surprise -->
-<div id="surpriseCircle" class="hidden">
-  <img src="https://i.ibb.co/S6kbbG2/teddy.gif" alt="teddy">
-  <h2 style="color:crimson;">Surprise 🎉</h2>
-</div>
+  <!-- START SCREEN -->
+  <div id="startScreen" class="start">
+    <h1>Enter Her Name to Unlock 🎁</h1>
+    <div class="inputWrap">
+      <input id="nameInput" placeholder="Enter name..." autocomplete="off" />
+      <button id="openBtn">Open</button>
+    </div>
+    <div style="margin-top:14px; color:rgba(255,255,255,0.45); font-size:13px">Type <strong>munnu</strong> to unlock ❤️</div>
+  </div>
 
-<!-- Step 2 Calendar + Cake -->
-<div id="calendar" class="hidden">
-  <div class="month"><h2>September 2025</h2>
-    <div class="cal">
-      <div class="day">1</div><div class="day">2</div><div class="day">3</div>
-      <div class="day">4</div><div class="day">5</div><div class="day">6</div>
-      <div class="day">7</div><div class="day">8</div><div class="day">9</div>
-      <div class="day">10</div><div class="day">11</div><div class="day">12</div>
-      <div class="day">13</div><div class="day">14</div><div class="day">15</div>
-      <div class="day">16</div><div class="day">17</div><div class="day">18</div>
-      <div class="day">19</div><div class="day">20</div><div class="day">21</div>
-      <div class="day">22</div><div class="day">23</div><div class="day">24</div>
-      <div class="day">25</div><div class="day">26</div>
-      <div class="day highlight">27</div>
-      <div class="day">28</div><div class="day">29</div><div class="day">30</div>
+  <!-- SURPRISE CIRCLE (hidden initially) -->
+  <div id="surprise" aria-hidden="true" class="">
+    <div class="teddy">🐻‍❄️</div>
+    <div class="sur-title">Surprise 🎉</div>
+  </div>
+
+  <!-- CALENDAR + CAKE stage (hidden) -->
+  <div id="calendarStage" class="hidden layout" aria-hidden="true" style="align-items:flex-start">
+
+    <div class="leftCol">
+      <div class="monthTitle">September 2025</div>
+      <div class="calHeader">Sun Mon Tue Wed Thu Fri Sat</div>
+      <div class="calGrid" id="calGrid">
+        <!-- days inserted by JS -->
+      </div>
+    </div>
+
+    <div class="rightCol">
+      <h2 style="margin:0">🎂 Happy Birthday Meri Sehzadii Ji ✨</h2>
+
+      <div class="cakeWrap">
+        <div class="cakeBall" id="cakeBall" aria-hidden="true">
+          <div class="candleStick"></div>
+          <div class="flame"></div>
+        </div>
+        <button id="cutCakeBtn">Cut Cake 🍰</button>
+        <div class="piecesRow" id="piecesRow">
+          <div class="piece">🍰</div>
+          <div class="piece">🍰</div>
+          <div class="piece">🍰</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CONFETTI overlay -->
+  <canvas id="confetti" class="confetti" aria-hidden="true"></canvas>
+
+  <!-- GIFT CARD (hidden) -->
+  <div id="cardStage" class="cardStage hidden" aria-hidden="true">
+    <div class="cardInner" id="cardInner" title="Tap to open">
+      <div class="cardFace front" id="cardFront">🎂🎈 Happy Birthday Jana ✨💗</div>
+      <div class="cardFace back" id="cardBack">
+        <strong style="display:block;margin-bottom:8px">Munnu ji —</strong>
+        <div style="font-size:15px; line-height:1.5">
+          Munnu jii, hum apka birthday toh aapke saath celebrate nahi kar paayenge, lekin
+          hum hamesha aapke dil me rahenge ❤️. Jab aap celebrate karengi, samajh lijiyega 
+          hum bhi uss pal aapke saath hi hain. Hamesha hum aapke hi rahenge chahe jo
+          ho jaye. Apna khayal rakhiye, smile karte rahiye aur is din ko dil se enjoy
+          kijiye. Allah aapko hamesha khush rakhe. Miss you so much, meri jaana 💗✨
+          shyad hum xutii me online na aayen tab tak aap msg nhi kariyega  jab aapi nhi rahengi
+          tab msg kariyega oky ji . 
+      
+        </div>
+      </div>
     </div>
   </div>
-  <h2>🎂 Happy Birthday Meri Sehzadii Ji 💓🥀✨</h2>
-  <div class="cake">
-    <div class="layer layer1"></div>
-    <div class="layer layer2"></div>
-    <div class="layer layer3"></div>
-    <div class="candle"></div><div class="flame"></div>
+
+  <!-- envelope icon to reopen letter -->
+  <div id="envelope" title="Open your letter (click)" aria-hidden="true">💌</div>
+
+  <!-- MY WISH stage -->
+  <div id="wishStage" class="wishStage hidden" aria-hidden="true">
+    <button id="wishButton">My Wish 💌</button>
+    <div id="wishText">Hamesha mere sath rahiye… chahe jitni bhi mushkilein aaye. Mera intezaar kariyega… aur kabhi chhod kar mat jayega ❤️</div>
   </div>
-  <button id="cutBtn">Cut Cake 🍰</button>
-  <div id="pieces">
-    <div class="piece">🍰</div>
-    <div class="piece">🍰</div>
-    <div class="piece">🍰</div>
+
+  <!-- ENDING -->
+  <div id="endingStage" class="ending hidden" aria-hidden="true">
+    <div class="big">Miss You Babe ✨💗</div>
+    <div style="margin-top:12px; color:rgba(255,255,255,0.7)">From your Bandar Khan Ji. Miya Ji</div>
   </div>
+
 </div>
 
-<!-- Step 3 Gift Card -->
-<div id="card" class="hidden">
-  <div class="card-inner" id="cardInner">
-    <div class="card-front">🎂🎈 Happy Birthday Jana ✨💗</div>
-    <div class="card-back">
-      Munnu hum Aapka birthday toh aapke sath celebrate nahi kar payenge,<br>
-      lekin hum aapke dil me hamesha rahenge ❤️.<br>
-      Jab aap celebrate karengi toh samajh lena hum bhi sath hi hain.<br>
-      Hamesha hum aapke hi rahenge chahe kuch bhi ho jaye.<br>
-      Apna khayal rakhiye aur is din ko dil se enjoy kijiye ❣️✨<br>
-      — Miss you so much Jana 💕
-    </div>
-  </div>
-</div>
-
-<!-- Step 4 My Wish -->
-<div id="wishBlock" class="hidden">
-  <button id="wishBtn">My Wish 💌</button>
-  <p id="wishText" class="hidden">
-    Hamesha mere sath rahiye… chahe jitni bhi mushkilein aaye.<br>
-    Mera intezaar kariyega… aur kabhi chhod kar mat jayega ❤️
-  </p>
-</div>
-
-<!-- Step 5 Ending -->
-<div id="ending" class="hidden">
-  <p>Take care Miss Ji 💕 Celebrate & enjoy your day ❣️</p>
-  <div class="bigText">Miss You Babe ✨💗</div>
-  <div class="bigText">From Your Bandar Khan Ji. Miya Ji</div>
-</div>
+<!-- step hint -->
+<div class="step-note">Tip: Tap the cake to continue the surprise</div>
 
 <script>
-  const startBtn=document.getElementById('startBtn');
-  startBtn.onclick=()=>{
-    let name=document.getElementById('nameInput').value.trim().toLowerCase();
-    if(name==="munnu"){
-      document.getElementById('enterName').classList.add('fadeOut');
-      setTimeout(()=>{
-        document.getElementById('enterName').classList.add('hidden');
-        document.getElementById('surpriseCircle').classList.remove('hidden');
-        setTimeout(()=>{
-          document.getElementById('surpriseCircle').classList.add('fadeOut');
-          setTimeout(()=>{
-            document.getElementById('surpriseCircle').classList.add('hidden');
-            document.body.className="bg2";
-            document.getElementById('calendar').classList.remove('hidden');
-            document.getElementById('calendar').classList.add('fadeIn');
-          },1000);
-        },3000);
-      },1000);
+/* ------------------------
+   Helper / State
+   ------------------------ */
+const state = { stage: 'start' };
+
+/* ------------------------
+   Elements
+   ------------------------ */
+const startScreen = document.getElementById('startScreen');
+const nameInput = document.getElementById('nameInput');
+const openBtn = document.getElementById('openBtn');
+const surprise = document.getElementById('surprise');
+
+const calendarStage = document.getElementById('calendarStage');
+const calGrid = document.getElementById('calGrid');
+const cutCakeBtn = document.getElementById('cutCakeBtn');
+const cakeBall = document.getElementById('cakeBall');
+const piecesRow = document.getElementById('piecesRow');
+
+const confettiCanvas = document.getElementById('confetti');
+const cardStage = document.getElementById('cardStage');
+const cardInner = document.getElementById('cardInner');
+const envelope = document.getElementById('envelope');
+const wishStage = document.getElementById('wishStage');
+const wishButton = document.getElementById('wishButton');
+const wishText = document.getElementById('wishText');
+const endingStage = document.getElementById('endingStage');
+
+/* ------------------------
+   Utilities
+   ------------------------ */
+function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+/* ------------------------
+   Calendar builder (September 2025 full)
+   ------------------------ */
+function buildCalendar(){
+  calGrid.innerHTML='';
+  // simple headers not needed, we'll push dates 1..30 in a 7-grid
+  const days = 30;
+  // We'll force grid start at Sunday index (let's place 1 at index 0 for simplicity like screenshots)
+  for(let d=1; d<=days; d++){
+    const div = document.createElement('div');
+    if(d===27){
+      const el = document.createElement('div');
+      el.className='dateHighlight';
+      el.innerHTML = '<span style="z-index:2">'+d+'</span><span class="heart">❤</span>';
+      calGrid.appendChild(el);
     } else {
-      alert("Only for Munnu ❤️");
+      div.className='calCell';
+      div.textContent = d;
+      calGrid.appendChild(div);
     }
-  };
+  }
+}
 
-  document.getElementById('cutBtn').onclick=()=>{
-    document.querySelector('.cake').classList.add('fadeOut');
-    setTimeout(()=>{
-      document.querySelector('.cake').style.display="none";
-      document.getElementById('pieces').style.display="block";
-      setTimeout(()=>{
-        document.getElementById('calendar').classList.add('fadeOut');
-        setTimeout(()=>{
-          document.getElementById('calendar').classList.add('hidden');
-          document.getElementById('card').classList.remove('hidden');
-          document.getElementById('card').classList.add('fadeIn');
-        },1000);
-      },2000);
-    },1000);
-  };
+/* ------------------------
+   Open button -> start flow
+   ------------------------ */
+openBtn.addEventListener('click', async ()=>{
+  const name = (nameInput.value||'').trim().toLowerCase();
+  if(name !== 'munnu'){
+    alert('This surprise is only for Munnu ❤️');
+    nameInput.focus();
+    return;
+  }
+  // animate out start
+  startScreen.style.transition='opacity .6s';
+  startScreen.style.opacity='0';
+  await sleep(600);
+  startScreen.style.display='none';
 
-  document.getElementById('cardInner').onclick=()=>{
-    document.getElementById('cardInner').classList.toggle('flipped');
-    setTimeout(()=>{
-      document.getElementById('card').classList.add('fadeOut');
-      setTimeout(()=>{
-        document.getElementById('card').classList.add('hidden');
-        document.getElementById('wishBlock').classList.remove('hidden');
-        document.getElementById('wishBlock').classList.add('slideIn');
-      },1000);
-    },4000);
-  };
+  // show surprise circle (teddy) pop
+  surprise.classList.add('show');
+  await sleep(2800);
+  surprise.classList.add('fade'); // fade placeholder
+  surprise.style.transition='opacity .5s, transform .5s';
+  surprise.style.opacity='0';
+  surprise.style.transform='scale(.6)';
+  await sleep(500);
+  surprise.style.display='none';
 
-  document.getElementById('wishBtn').onclick=()=>{
-    document.getElementById('wishText').classList.remove('hidden');
-    document.getElementById('wishText').classList.add('fadeIn');
-    setTimeout(()=>{
-      document.getElementById('wishBlock').classList.add('fadeOut');
-      setTimeout(()=>{
-        document.getElementById('wishBlock').classList.add('hidden');
-        document.body.className="bg3";
-        document.getElementById('ending').classList.remove('hidden');
-        document.getElementById('ending').classList.add('fadeIn');
-      },1000);
-    },4000);
-  };
+  // show calendar+cake stage
+  buildCalendar();
+  calendarStage.classList.remove('hidden');
+  calendarStage.classList.add('fadeIn');
+  state.stage='calendar';
+});
+
+/* ------------------------
+   Cake cut -> pieces -> confetti -> move to card
+   ------------------------ */
+cutCakeBtn.addEventListener('click', async ()=>{
+  if(state.stage !== 'calendar') return;
+  // animate cake disappear
+  cakeBall.style.transition='transform .7s, opacity .6s';
+  cakeBall.style.transform='scale(.6) translateY(-20px) rotate(-6deg)';
+  cakeBall.style.opacity='0';
+  await sleep(600);
+  cakeBall.style.display='none';
+
+  // show pieces
+  piecesRow.classList.add('show');
+
+  // start confetti for 2s
+  startConfetti();
+  await sleep(2000);
+  stopConfetti();
+
+  // hide calendar stage with fade and then show card
+  calendarStage.style.transition='opacity .6s';
+  calendarStage.style.opacity='0';
+  await sleep(600);
+  calendarStage.classList.add('hidden');
+  calendarStage.style.opacity='1';
+
+  // show card (center)
+  cardStage.classList.remove('hidden');
+  cardInner.style.transform='rotateY(0deg)';
+  state.stage='card';
+});
+
+/* ------------------------
+   Card flip -> show back -> show envelope icon
+   ------------------------ */
+cardInner.addEventListener('click', async ()=>{
+  // flip
+  cardInner.classList.toggle('flipped');
+  // after flip show envelope and move to wish stage
+  await sleep(1200); // let user read
+  // show envelope to reopen letter
+  envelope.classList.add('show');
+  envelope.setAttribute('aria-hidden','false');
+
+  // after small delay remove card and show wish button stage
+  await sleep(900);
+  cardStage.classList.add('hidden');
+  wishStage.classList.remove('hidden');
+  state.stage='wish';
+});
+
+/* envelope click to reopen card */
+envelope.addEventListener('click', async ()=>{
+  if(state.stage === 'card' || cardStage.classList.contains('hidden')===false){
+    // already visible
+    return;
+  }
+  // show card again
+  cardStage.classList.remove('hidden');
+  // hide wish stage
+  wishStage.classList.add('hidden');
+  state.stage='card';
+  // flip to front (so user can click to flip)
+  cardInner.classList.remove('flipped');
+});
+
+/* ------------------------
+   Wish button reveals wish text then ending
+   ------------------------ */
+wishButton.addEventListener('click', async ()=>{
+  if(state.stage !== 'wish') return;
+  // show wish text with tiny reveal
+  wishText.style.display='block';
+  wishText.style.opacity='0';
+  wishText.style.transition='opacity .8s';
+  await sleep(40);
+  wishText.style.opacity='1';
+
+  // after 3.5s move to ending
+  await sleep(3500);
+  wishStage.classList.add('hidden');
+  endingStage.classList.remove('hidden');
+  state.stage='ending';
+});
+
+/* ------------------------
+   Confetti engine (canvas) lightweight
+   ------------------------ */
+let confettiCtx, confettiRunning=false, confettiParticles=[];
+function startConfetti(){
+  if(!confettiCanvas) return;
+  confettiCanvas.width = innerWidth;
+  confettiCanvas.height = innerHeight;
+  confettiCtx = confettiCanvas.getContext('2d');
+  confettiRunning = true;
+  confettiParticles = [];
+  for(let i=0;i<90;i++){
+    confettiParticles.push({
+      x: Math.random()*confettiCanvas.width,
+      y: Math.random()*confettiCanvas.height - confettiCanvas.height,
+      r: 6+Math.random()*10,
+      dx: -2 + Math.random()*4,
+      dy: 2 + Math.random()*4,
+      color: ['#ff5973','#ffd36e','#8ef0ff','#ff8ae3'][Math.floor(Math.random()*4)],
+      rot: Math.random()*360
+    });
+  }
+  confettiLoop();
+}
+function confettiLoop(){
+  if(!confettiRunning) return;
+  confettiCtx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
+  confettiParticles.forEach(p=>{
+    confettiCtx.save();
+    confettiCtx.translate(p.x,p.y);
+    confettiCtx.rotate(p.rot*Math.PI/180);
+    confettiCtx.fillStyle=p.color;
+    confettiCtx.fillRect(-p.r/2,-p.r/2,p.r, p.r*0.6);
+    confettiCtx.restore();
+    p.x += p.dx;
+    p.y += p.dy;
+    p.rot += 6;
+    if(p.y > confettiCanvas.height + 30){ p.y = -30; p.x = Math.random()*confettiCanvas.width; }
+  });
+  requestAnimationFrame(confettiLoop);
+}
+function stopConfetti(){ confettiRunning=false; if(confettiCtx) confettiCtx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height); }
+
+/* ------------------------
+   Init: focus input
+   ------------------------ */
+nameInput.focus();
+
+/* keyboard enter support */
+nameInput.addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter') openBtn.click();
+});
+
+/* make sure canvas resizes */
+window.addEventListener('resize', ()=>{
+  if(confettiCanvas.width !== innerWidth) { confettiCanvas.width = innerWidth; confettiCanvas.height = innerHeight; }
+});
 </script>
+
 </body>
   </html>
