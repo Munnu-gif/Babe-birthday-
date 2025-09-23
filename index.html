@@ -6,11 +6,11 @@
 <style>
   body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', cursive, sans-serif;
     background: #000;
     color: #fff;
     text-align: center;
-    overflow-x: hidden;
+    overflow: hidden;
   }
   h1,h2,h3 { margin: 10px 0; }
   .hidden { display: none; }
@@ -18,37 +18,48 @@
   /* Animations */
   .fadeIn { animation: fadeIn 1s forwards; }
   .fadeOut { animation: fadeOut 1s forwards; }
+  .slideIn { animation: slideIn 1s forwards; }
   @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
   @keyframes fadeOut { from{opacity:1;} to{opacity:0;} }
-  .slideIn { animation: slideIn 1s forwards; }
-  @keyframes slideIn { from{transform:translateY(50px); opacity:0;} to{transform:translateY(0); opacity:1;} }
+  @keyframes slideIn { from{transform:translateY(50px);opacity:0;} to{transform:translateY(0);opacity:1;} }
+
+  /* Backgrounds */
+  .bg1 { background:url('https://i.ibb.co/SrqvYrS/romantic-bg.gif') center/cover no-repeat fixed; }
+  .bg2 { background:url('https://i.ibb.co/gM8r0qP/heart-bg.gif') center/cover no-repeat fixed; }
+  .bg3 { background:url('https://i.ibb.co/pxc5CJt/fireworks.gif') center/cover no-repeat fixed; }
 
   /* Enter Name */
   #enterName {
     height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg,#111,#222);
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
   }
   #nameInput {
-    padding: 10px;
-    font-size: 18px;
-    border-radius: 8px;
-    border: none;
-    outline: none;
+    padding: 10px; font-size: 18px;
+    border-radius: 8px; border: none; outline: none;
   }
   #startBtn {
     margin-top: 10px;
     padding: 10px 20px;
     font-size: 18px;
-    border: none;
-    border-radius: 8px;
-    background: crimson;
-    color: #fff;
-    cursor: pointer;
+    border: none; border-radius: 8px;
+    background: crimson; color: #fff; cursor: pointer;
   }
+
+  /* Surprise Circle */
+  #surpriseCircle {
+    position: fixed; top:50%; left:50%;
+    transform: translate(-50%,-50%);
+    width:200px; height:200px;
+    border-radius:50%;
+    background:#fff;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    box-shadow:0 0 30px pink;
+    animation: pop 1s forwards;
+  }
+  #surpriseCircle img { width:100px; }
+  @keyframes pop { from{transform:translate(-50%,-50%) scale(0);} to{transform:translate(-50%,-50%) scale(1);} }
 
   /* Calendar */
   #calendar {
@@ -58,169 +69,55 @@
   .cal {
     display: grid;
     grid-template-columns: repeat(7, 50px);
-    gap: 8px;
-    justify-content: center;
-    margin: auto;
-    max-width: 400px;
+    gap: 6px; justify-content: center;
+    margin: auto; max-width: 400px;
   }
   .day {
     width: 50px; height: 50px;
     line-height: 50px;
-    border-radius: 50%;
-    background: #222;
-    text-align: center;
+    border-radius: 50%; background:#222;
   }
   .highlight {
-    background: red;
-    color: #fff;
-    font-weight: bold;
+    background: red; color:#fff; font-weight: bold;
     position: relative;
   }
   .highlight::after {
-    content: "❤️";
-    position: absolute;
-    top: -12px; left: -12px;
-    font-size: 38px;
-    z-index: -1;
+    content:"❤️";
+    position:absolute; top:-15px; left:-15px;
+    font-size:38px; z-index:-1;
   }
 
   /* Cake */
-  #cake { margin-top: 20px; }
-  .cake {
-    position: relative;
-    margin: 20px auto;
-    width: 220px;
-    height: 160px;
-  }
-  .layer {
-    width: 100%;
-    height: 40px;
-    border-radius: 10px;
-    margin: 2px 0;
-    position: relative;
-  }
-  .layer1 { background: #ff99cc; }
-  .layer2 { background: #ffccdd; }
-  .layer3 { background: #ffe6ee; }
+  .cake { margin:20px auto; width:220px; height:160px; position:relative; }
+  .layer { height:40px; border-radius:10px; margin:2px 0; }
+  .layer1{background:#ff99cc;} .layer2{background:#ffccdd;} .layer3{background:#ffe6ee;}
+  .candle{width:12px; height:40px; background:yellow; position:absolute; top:-50px; left:50%; transform:translateX(-50%); border-radius:4px;}
+  .flame{width:15px; height:15px; background:orange; border-radius:50%; position:absolute; top:-65px; left:50%; transform:translateX(-50%); animation:flicker .5s infinite;}
+  @keyframes flicker{0%{opacity:1;}50%{opacity:.6;transform:scale(1.2);}100%{opacity:1;}}
+  #cutBtn{margin-top:10px;padding:10px 20px;border:none;background:crimson;color:#fff;border-radius:8px;cursor:pointer;}
+  #pieces{display:none;margin-top:20px;}
+  .piece{display:inline-block;width:60px;height:60px;margin:5px;background:pink;border-radius:10px;animation:pieceAnim 1s forwards;}
+  @keyframes pieceAnim{from{transform:scale(0);opacity:0;}to{transform:scale(1);opacity:1;}}
 
-  .candle {
-    width: 12px; height: 40px;
-    background: yellow;
-    position: absolute;
-    top: -50px; left: 50%;
-    transform: translateX(-50%);
-    border-radius: 4px;
-  }
-  .flame {
-    width: 15px; height: 15px;
-    background: orange;
-    border-radius: 50%;
-    position: absolute;
-    top: -65px; left: 50%;
-    transform: translateX(-50%);
-    animation: flicker 0.5s infinite;
-  }
-  @keyframes flicker {
-    0% { opacity: 1; transform: scale(1);}
-    50% { opacity: 0.6; transform: scale(1.2);}
-    100% { opacity: 1; transform: scale(1);}
-  }
-  #cutBtn {
-    margin-top: 10px;
-    padding: 10px 20px;
-    border: none;
-    background: crimson;
-    color: #fff;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  #pieces {
-    display: none;
-    margin-top: 20px;
-  }
-  .piece {
-    display: inline-block;
-    width: 60px; height: 60px;
-    margin: 5px;
-    background: pink;
-    border-radius: 10px;
-    animation: pieceAnim 1s forwards;
-  }
-  @keyframes pieceAnim {
-    from { transform: scale(0); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-
-  /* Gift Card */
-  #card {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  .card-inner {
-    position: relative;
-    width: 320px; height: 200px;
-    text-align: center;
-    transition: transform 1s;
-    transform-style: preserve-3d;
-    cursor: pointer;
-  }
-  .card-front, .card-back {
-    position: absolute;
-    width: 100%; height: 100%;
-    backface-visibility: hidden;
-    border-radius: 10px;
-    box-shadow: 0 0 20px #fff;
-  }
-  .card-front {
-    background: #ffdde1;
-    display: flex; justify-content: center; align-items: center;
-    color: crimson; font-size: 20px; font-weight: bold;
-    font-family: cursive;
-  }
-  .card-back {
-    background: #fff;
-    color: #000;
-    padding: 15px;
-    transform: rotateY(180deg);
-    font-size: 14px;
-  }
-  .flipped { transform: rotateY(180deg); }
+  /* Card */
+  #card{display:flex;justify-content:center;align-items:center;height:100vh;}
+  .card-inner{width:320px;height:200px;transition:transform 1s;transform-style:preserve-3d;cursor:pointer;position:relative;}
+  .card-front,.card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:10px;box-shadow:0 0 20px #fff;}
+  .card-front{background:#ffdde1;display:flex;justify-content:center;align-items:center;color:crimson;font-size:20px;font-weight:bold;font-family:cursive;}
+  .card-back{background:#fff;color:#000;padding:15px;transform:rotateY(180deg);font-size:14px;}
+  .flipped{transform:rotateY(180deg);}
 
   /* Wish */
-  #wishBlock {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 40px;
-  }
-  #wishBtn {
-    padding: 10px 20px;
-    background: #ff0077;
-    border: none; border-radius: 8px;
-    color: #fff;
-    cursor: pointer;
-  }
-  #wishText {
-    font-size: 18px;
-    margin-top: 20px;
-  }
+  #wishBlock{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;}
+  #wishBtn{padding:10px 20px;background:#ff0077;border:none;border-radius:8px;color:#fff;cursor:pointer;}
+  #wishText{font-size:18px;margin-top:20px;}
 
   /* Ending */
-  #ending {
-    text-align: center;
-    margin: 30px;
-  }
-  .bigText {
-    font-size: 40px;
-    font-weight: bold;
-    color: pink;
-    animation: fadeIn 3s;
-  }
+  #ending{text-align:center;margin:30px;}
+  .bigText{font-size:40px;font-weight:bold;color:pink;animation:fadeIn 3s;}
 </style>
 </head>
-<body>
+<body class="bg1">
 
 <!-- Step 1 -->
 <div id="enterName">
@@ -229,10 +126,15 @@
   <button id="startBtn">Open</button>
 </div>
 
+<!-- Surprise -->
+<div id="surpriseCircle" class="hidden">
+  <img src="https://i.ibb.co/S6kbbG2/teddy.gif" alt="teddy">
+  <h2 style="color:crimson;">Surprise 🎉</h2>
+</div>
+
 <!-- Step 2 Calendar + Cake -->
 <div id="calendar" class="hidden">
-  <div class="month">
-    <h2>September 2025</h2>
+  <div class="month"><h2>September 2025</h2>
     <div class="cal">
       <div class="day">1</div><div class="day">2</div><div class="day">3</div>
       <div class="day">4</div><div class="day">5</div><div class="day">6</div>
@@ -247,36 +149,31 @@
       <div class="day">28</div><div class="day">29</div><div class="day">30</div>
     </div>
   </div>
-  <div id="cake">
-    <h2>🎂 Happy Birthday Meri Sehzadii Ji 💓🥀✨</h2>
-    <div class="cake">
-      <div class="layer layer1"></div>
-      <div class="layer layer2"></div>
-      <div class="layer layer3"></div>
-      <div class="candle"></div>
-      <div class="flame"></div>
-    </div>
-    <button id="cutBtn">Cut Cake 🍰</button>
-    <div id="pieces">
-      <div class="piece">🍰</div>
-      <div class="piece">🍰</div>
-      <div class="piece">🍰</div>
-    </div>
+  <h2>🎂 Happy Birthday Meri Sehzadii Ji 💓🥀✨</h2>
+  <div class="cake">
+    <div class="layer layer1"></div>
+    <div class="layer layer2"></div>
+    <div class="layer layer3"></div>
+    <div class="candle"></div><div class="flame"></div>
+  </div>
+  <button id="cutBtn">Cut Cake 🍰</button>
+  <div id="pieces">
+    <div class="piece">🍰</div>
+    <div class="piece">🍰</div>
+    <div class="piece">🍰</div>
   </div>
 </div>
 
 <!-- Step 3 Gift Card -->
 <div id="card" class="hidden">
   <div class="card-inner" id="cardInner">
-    <div class="card-front">
-      🎂🎈 Happy Birthday Jana ✨💗
-    </div>
+    <div class="card-front">🎂🎈 Happy Birthday Jana ✨💗</div>
     <div class="card-back">
-      Munnu jii ,hum Aapka birthday toh aapke sath celebrate nahi kar payenge,<br>
+      Munnu hum Aapka birthday toh aapke sath celebrate nahi kar payenge,<br>
       lekin hum aapke dil me hamesha rahenge ❤️.<br>
-      Jab aap celebrate karengi toh samajh lijiyega k hum bhi sath hi hain.<br>
+      Jab aap celebrate karengi toh samajh lena hum bhi sath hi hain.<br>
       Hamesha hum aapke hi rahenge chahe kuch bhi ho jaye.<br>
-      Apna khayal rakhiyega aur aajka din ko dil se enjoy kijiye ❣️✨<br>
+      Apna khayal rakhiye aur is din ko dil se enjoy kijiye ❣️✨<br>
       — Miss you so much Jana 💕
     </div>
   </div>
@@ -294,73 +191,75 @@
 <!-- Step 5 Ending -->
 <div id="ending" class="hidden">
   <p>Take care Miss Ji 💕 Celebrate & enjoy your day ❣️</p>
-  <div class="bigText">Miss You Babe ✨💗
-      Fi amanillah</div>
+  <div class="bigText">Miss You Babe ✨💗</div>
   <div class="bigText">From Your Bandar Khan Ji. Miya Ji</div>
 </div>
 
 <script>
-  const startBtn = document.getElementById('startBtn');
-  startBtn.onclick = ()=>{
-    let name = document.getElementById('nameInput').value.trim().toLowerCase();
-    if(name === "munnu"){
-      let enter = document.getElementById('enterName');
-      enter.classList.add('fadeOut');
+  const startBtn=document.getElementById('startBtn');
+  startBtn.onclick=()=>{
+    let name=document.getElementById('nameInput').value.trim().toLowerCase();
+    if(name==="munnu"){
+      document.getElementById('enterName').classList.add('fadeOut');
       setTimeout(()=>{
-        enter.classList.add('hidden');
-        let cal = document.getElementById('calendar');
-        cal.classList.remove('hidden');
-        cal.classList.add('fadeIn');
+        document.getElementById('enterName').classList.add('hidden');
+        document.getElementById('surpriseCircle').classList.remove('hidden');
+        setTimeout(()=>{
+          document.getElementById('surpriseCircle').classList.add('fadeOut');
+          setTimeout(()=>{
+            document.getElementById('surpriseCircle').classList.add('hidden');
+            document.body.className="bg2";
+            document.getElementById('calendar').classList.remove('hidden');
+            document.getElementById('calendar').classList.add('fadeIn');
+          },1000);
+        },3000);
       },1000);
     } else {
       alert("Only for Munnu ❤️");
     }
   };
 
-  document.getElementById('cutBtn').onclick = ()=>{
-    let cakeDiv = document.querySelector('.cake');
-    cakeDiv.classList.add('fadeOut');
+  document.getElementById('cutBtn').onclick=()=>{
+    document.querySelector('.cake').classList.add('fadeOut');
     setTimeout(()=>{
-      cakeDiv.style.display="none";
+      document.querySelector('.cake').style.display="none";
       document.getElementById('pieces').style.display="block";
       setTimeout(()=>{
         document.getElementById('calendar').classList.add('fadeOut');
         setTimeout(()=>{
           document.getElementById('calendar').classList.add('hidden');
-          let card = document.getElementById('card');
-          card.classList.remove('hidden');
-          card.classList.add('fadeIn');
+          document.getElementById('card').classList.remove('hidden');
+          document.getElementById('card').classList.add('fadeIn');
         },1000);
       },2000);
     },1000);
   };
 
-  document.getElementById('cardInner').onclick = ()=>{
+  document.getElementById('cardInner').onclick=()=>{
     document.getElementById('cardInner').classList.toggle('flipped');
     setTimeout(()=>{
       document.getElementById('card').classList.add('fadeOut');
       setTimeout(()=>{
         document.getElementById('card').classList.add('hidden');
-        let wish = document.getElementById('wishBlock');
-        wish.classList.remove('hidden');
-        wish.classList.add('slideIn');
+        document.getElementById('wishBlock').classList.remove('hidden');
+        document.getElementById('wishBlock').classList.add('slideIn');
       },1000);
     },4000);
   };
 
-  document.getElementById('wishBtn').onclick = ()=>{
+  document.getElementById('wishBtn').onclick=()=>{
     document.getElementById('wishText').classList.remove('hidden');
     document.getElementById('wishText').classList.add('fadeIn');
     setTimeout(()=>{
       document.getElementById('wishBlock').classList.add('fadeOut');
       setTimeout(()=>{
         document.getElementById('wishBlock').classList.add('hidden');
+        document.body.className="bg3";
         document.getElementById('ending').classList.remove('hidden');
         document.getElementById('ending').classList.add('fadeIn');
       },1000);
     },4000);
   };
 </script>
-
 </body>
-</html>
+  </html>
