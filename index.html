@@ -1,291 +1,415 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Happy Birthday 🎉</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      background: linear-gradient(135deg, #ffb6c1, #ffc0cb, #ff69b4, #ff1493);
-      background-size: 400% 400%;
-      animation: gradientBG 12s ease infinite;
-      overflow-x: hidden;
-      text-align: center;
-    }
-    @keyframes gradientBG {
-      0%{background-position:0% 50%}
-      50%{background-position:100% 50%}
-      100%{background-position:0% 50%}
-    }
+<meta charset="UTF-8">
+<title>Happy Birthday My Love ❤️</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', cursive, sans-serif;
+    background: linear-gradient(-45deg, #ffb6c1, #ff69b4, #ff1493, #db7093);
+    background-size: 400% 400%;
+    animation: gradientBG 12s ease infinite;
+    color: #fff;
+    text-align: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 
-    .hidden { display: none; }
-    .fadeOut { animation: fadeOut 1s forwards; }
-    @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
-    .fadeIn { animation: fadeIn 1.2s forwards; }
-    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+  h1,h2,h3 { margin: 10px 0; }
 
-    .start {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: white;
-    }
-    input {
-      padding: 10px;
-      border-radius: 10px;
-      border: none;
-      font-size: 18px;
-      margin: 10px;
-    }
-    button {
-      padding: 12px 24px;
-      border-radius: 25px;
-      border: none;
-      background: #ff69b4;
-      color: white;
-      font-weight: bold;
-      font-size: 16px;
-      cursor: pointer;
-      transition: transform 0.3s;
-    }
-    button:hover { transform: scale(1.05); }
+  .hidden { display: none; }
+  .fadeIn { animation: fadeIn 1s forwards; }
+  .fadeOut { animation: fadeOut 1s forwards; }
+  @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+  @keyframes fadeOut { from{opacity:1;} to{opacity:0;} }
+  .slideIn { animation: slideIn 1s forwards; }
+  @keyframes slideIn { from{transform:translateY(50px); opacity:0;} to{transform:translateY(0); opacity:1;} }
 
-    h1 {
-      font-size: 36px;
-      color: white;
-      text-shadow: 2px 2px 5px #ff1493;
-    }
+  /* Floating hearts */
+  .heart {
+    position: fixed;
+    bottom: -10px;
+    color: #ff3366;
+    font-size: 24px;
+    animation: floatUp 6s linear infinite;
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(0) scale(0.8); opacity: 1; }
+    100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
+  }
 
-    .calendar {
-      margin-top: 30px;
-      display: inline-block;
-      padding: 20px;
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    }
-    .calendar table {
-      border-collapse: collapse;
-      margin: auto;
-    }
-    .calendar th, .calendar td {
-      border: 1px solid #ddd;
-      padding: 12px;
-      text-align: center;
-      width: 50px;
-      height: 50px;
-      font-size: 18px;
-    }
-    .heartDay {
-      background: #ff69b4;
-      color: white;
-      font-weight: bold;
-      border-radius: 50%;
-      position: relative;
-    }
-    .heartDay::after {
-      content: "❤️";
-      position: absolute;
-      top: -10px; left: -10px;
-      font-size: 20px;
-    }
+  /* Enter Name */
+  #enterName {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  #nameInput {
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+  }
+  #startBtn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    background: crimson;
+    color: #fff;
+    cursor: pointer;
+  }
 
-    .cake {
-      margin: 40px auto;
-      width: 150px;
-      height: 150px;
-      background: linear-gradient(to top, #ff69b4, #ffc0cb);
-      border-radius: 10px;
-      position: relative;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
-    .cake::before {
-      content: "";
-      position: absolute;
-      top: -30px;
-      left: 65px;
-      width: 20px;
-      height: 30px;
-      background: gold;
-      border-radius: 5px;
-    }
-    .cake::after {
-      content: "🔥";
-      position: absolute;
-      top: -40px;
-      left: 68px;
-      font-size: 20px;
-    }
+  /* Calendar */
+  #calendar {
+    padding: 20px;
+  }
+  .month h2 { color: #fff; text-shadow: 0 0 8px #ff99cc; }
+  .cal {
+    display: grid;
+    grid-template-columns: repeat(7, 50px);
+    gap: 8px;
+    justify-content: center;
+    margin: auto;
+    max-width: 400px;
+  }
+  .day {
+    width: 50px; height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    text-align: center;
+    font-weight: bold;
+  }
+  .highlight {
+    background: #ff3366;
+    color: #fff;
+    position: relative;
+  }
+  .highlight::after {
+    content: "❤️";
+    position: absolute;
+    top: -12px; left: -12px;
+    font-size: 32px;
+  }
 
-    .card {
-      margin: 30px auto;
-      width: 80%;
-      max-width: 400px;
-      background: #fff0f5;
-      border: 2px solid #ff69b4;
-      border-radius: 20px;
-      padding: 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-      font-size: 18px;
-    }
+  /* Cake */
+  #cake { margin-top: 20px; }
+  .cake {
+    position: relative;
+    margin: 20px auto;
+    width: 220px;
+    height: 160px;
+  }
+  .layer {
+    width: 100%;
+    height: 40px;
+    border-radius: 20px;
+    margin: 2px 0;
+    position: relative;
+  }
+  .layer1 { background: linear-gradient(to right,#ff99cc,#ff66b2); }
+  .layer2 { background: linear-gradient(to right,#ffb6c1,#ff80bf); }
+  .layer3 { background: linear-gradient(to right,#ffd6e7,#ff99cc); }
 
-    .gift {
-      margin: 30px auto;
-      width: 150px;
-      height: 150px;
-      background: #ff1493;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: bold;
-      font-size: 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    }
+  .candle {
+    width: 12px; height: 40px;
+    background: yellow;
+    position: absolute;
+    top: -50px; left: 50%;
+    transform: translateX(-50%);
+    border-radius: 4px;
+  }
+  .flame {
+    width: 15px; height: 15px;
+    background: orange;
+    border-radius: 50%;
+    position: absolute;
+    top: -65px; left: 50%;
+    transform: translateX(-50%);
+    animation: flicker 0.5s infinite;
+  }
+  @keyframes flicker {
+    0% { opacity: 1; transform: scale(1);}
+    50% { opacity: 0.6; transform: scale(1.2);}
+    100% { opacity: 1; transform: scale(1);}
+  }
+  #cutBtn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: none;
+    background: crimson;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  #pieces {
+    display: none;
+    margin-top: 20px;
+  }
+  .piece {
+    display: inline-block;
+    width: 60px; height: 60px;
+    margin: 5px;
+    background: pink;
+    border-radius: 10px;
+    animation: pieceAnim 1s forwards;
+  }
+  @keyframes pieceAnim {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
 
-    .final {
-      font-size: 28px;
-      color: white;
-      margin: 30px;
-      text-shadow: 2px 2px 6px #000;
-    }
-  </style>
+  /* Gift Card */
+  #card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .card-inner {
+    position: relative;
+    width: 320px; height: 200px;
+    text-align: center;
+    transition: transform 1s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+  }
+  .card-front, .card-back {
+    position: absolute;
+    width: 100%; height: 100%;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #fff;
+  }
+  .card-front {
+    background: #ffdde1;
+    display: flex; justify-content: center; align-items: center;
+    color: crimson; font-size: 20px; font-weight: bold;
+    font-family: cursive;
+  }
+  .card-back {
+    background: #fff;
+    color: #000;
+    padding: 15px;
+    transform: rotateY(180deg);
+    font-size: 14px;
+  }
+  .flipped { transform: rotateY(180deg); }
+
+  /* Wish */
+  #wishBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+  }
+  #wishBtn {
+    padding: 10px 20px;
+    background: #ff0077;
+    border: none; border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+  }
+  #wishText {
+    font-size: 18px;
+    margin-top: 20px;
+  }
+
+  /* Ending */
+  #ending {
+    text-align: center;
+    margin: 30px;
+  }
+  .bigText {
+    font-size: 40px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 10px #ff66b2;
+    animation: fadeIn 3s;
+  }
+
+  /* Teddy bear gif */
+  .teddy {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 120px;
+    height: auto;
+    z-index: 10;
+    animation: bounce 2s infinite ease-in-out;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+</style>
 </head>
 <body>
-  <!-- Step 1: Start -->
-  <div class="start" id="startStep">
-    <h1>Enter your name to unlock 🎀</h1>
-    <input id="name" placeholder="Enter name...">
-    <button id="open">Open</button>
-  </div>
 
-  <!-- Step 2: Calendar -->
-  <div id="calendarStep" class="hidden">
-    <h1>Happy Birthday Meri Sehzadii Ji ✨</h1>
-    <div class="calendar">
-      <table>
-        <tr><th>Su</th><th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th></tr>
-        <tr><td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
-        <tr><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td></tr>
-        <tr><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td></tr>
-        <tr><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td><td class="heartDay">27</td></tr>
-        <tr><td>28</td><td>29</td><td>30</td><td></td><td></td><td></td><td></td></tr>
-      </table>
+<!-- Step 1 -->
+<div id="enterName">
+  <h1>Enter Her Name to Unlock 🎁</h1>
+  <input type="text" id="nameInput" placeholder="Enter name...">
+  <button id="startBtn">Open</button>
+</div>
+
+<!-- Step 2 Calendar + Cake -->
+<div id="calendar" class="hidden">
+  <div class="month">
+    <h2>🎂 Happy Birthday Meri Sehzadii Ji ✨</h2>
+    <div class="cal">
+      <div class="day">1</div><div class="day">2</div><div class="day">3</div>
+      <div class="day">4</div><div class="day">5</div><div class="day">6</div>
+      <div class="day">7</div><div class="day">8</div><div class="day">9</div>
+      <div class="day">10</div><div class="day">11</div><div class="day">12</div>
+      <div class="day">13</div><div class="day">14</div><div class="day">15</div>
+      <div class="day">16</div><div class="day">17</div><div class="day">18</div>
+      <div class="day">19</div><div class="day">20</div><div class="day">21</div>
+      <div class="day">22</div><div class="day">23</div><div class="day">24</div>
+      <div class="day">25</div><div class="day">26</div>
+      <div class="day highlight">27</div>
+      <div class="day">28</div><div class="day">29</div><div class="day">30</div>
     </div>
   </div>
-
-  <!-- Step 3: Cake -->
-  <div id="cakeStep" class="hidden">
-    <h1>🎂 Tap to cut the cake 🎂</h1>
-    <div class="cake" id="cake"></div>
-  </div>
-
-  <!-- Step 4: Card -->
-  <div id="cardStep" class="hidden">
-    <div class="card">
-      <h2>Happy Birthday Jana 💌</h2>
-      <p>
-        Munnu jii, hum Aapka birthday toh Aapke sath celebrate Nahi Kar payenge lekin hum Aapke dil me haina 💖. 
-        Jab aap celebrate kariyega toh hum bhi sath hi hunge ✨.  
-        Hamesha hum Aapke hi rahenge chahe jo ho jaye 🌹.  
-        Hamesha aapka sath denge chahe koi de na de 💞.  
-        Apna khayal rakhiye aur xutii axe enjoy kariye 🎁.  
-        Shayad hum xutti me bhi online na aaye… par dil hamesha aapke sath hai.  
-        Enjoy your very special day ❣️👀
-      </p>
+  <div id="cake">
+    <h2>🎂 Happy Birthday Meri Sehzadii Ji 💓🥀✨</h2>
+    <div class="cake">
+      <div class="layer layer1"></div>
+      <div class="layer layer2"></div>
+      <div class="layer layer3"></div>
+      <div class="candle"></div>
+      <div class="flame"></div>
+    </div>
+    <button id="cutBtn">Cut Cake 🍰</button>
+    <div id="pieces">
+      <div class="piece">🍰</div>
+      <div class="piece">🍰</div>
+      <div class="piece">🍰</div>
     </div>
   </div>
+</div>
 
-  <!-- Step 5: Gift -->
-  <div id="giftStep" class="hidden">
-    <div class="gift">❤️ Mera Dil ❤️</div>
-  </div>
-
-  <!-- Step 6: My Wish -->
-  <div id="wishStep" class="hidden">
-    <button id="wishBtn">My Wish 💫</button>
-  </div>
-
-  <!-- Step 7: Final Message -->
-  <div id="finalStep" class="hidden">
-    <div class="final">
-      Hamesha mere sath rahiye chahe kitni bhi mushkilein aaye... 💖<br>
-      Mera intezaar kariyega... 🌹<br>
-      Take care Miss Ji ✨<br><br>
-      🎉 Celebrate and Enjoy Your Day ❣️<br><br>
-      <b>MISS YOU ❤️</b>
+<!-- Step 3 Gift Card -->
+<div id="card" class="hidden">
+  <div class="card-inner" id="cardInner">
+    <div class="card-front">
+      🎂🎈 Happy Birthday Jana ✨💗
+    </div>
+    <div class="card-back">
+      Munnu jii , hum Aapka birthday toh aapke sath celebrate nahi kar payenge,<br>
+      lekin hum aapke dil me hamesha rahenge ❤️.<br>
+      Jab aap celebrate karengi toh samajh lijiyega hum bhi sath hi hain.<br>
+      Hamesha hum aapke hi rahenge chahe kuch bhi ho jaye.<br>
+      Apna khayal rakhiye aur is din ko dil se enjoy kijiye ❣️✨<br>
+      — Miss you so much Jana 💕
     </div>
   </div>
+</div>
 
-  <script>
-    const startStep = document.getElementById('startStep');
-    const calendarStep = document.getElementById('calendarStep');
-    const cakeStep = document.getElementById('cakeStep');
-    const cardStep = document.getElementById('cardStep');
-    const giftStep = document.getElementById('giftStep');
-    const wishStep = document.getElementById('wishStep');
-    const finalStep = document.getElementById('finalStep');
+<!-- Step 4 My Wish -->
+<div id="wishBlock" class="hidden">
+  <button id="wishBtn">My Wish 💌</button>
+  <p id="wishText" class="hidden">
+    Hamesha mere sath rahiye… chahe jitni bhi mushkilein aaye.<br>
+    Mera intezaar kariyega… aur kabhi chhod kar mat jayega ❤️
+  </p>
+</div>
 
-    document.getElementById('open').addEventListener('click', () => {
-      const val = (document.getElementById('name').value || '').trim().toLowerCase();
-      if(val !== 'miss'){
-        alert('This surprise is only for Miss ❤️');
-        return;
-      }
-      startStep.classList.add('fadeOut');
+<!-- Step 5 Ending -->
+<div id="ending" class="hidden">
+  <p>Take care Miss Ji 💕 Celebrate & enjoy your day ❣️</p>
+  <div class="bigText">Miss You Babe ✨💗Fi amanillah</div>
+  <div class="bigText">From Your Bandar Khan Ji. Miya Ji</div>
+</div>
+
+<!-- Teddy Bear GIF -->
+<img src="https://media.tenor.com/0c6QpN7PxE4AAAAi/teddy-bear-love.gif" alt="Teddy Bear" class="teddy">
+
+<script>
+  // Floating hearts generator
+  function createHeart(){
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+  }
+  setInterval(createHeart,800);
+
+  const startBtn = document.getElementById('startBtn');
+  startBtn.onclick = ()=>{
+    let name = document.getElementById('nameInput').value.trim().toLowerCase();
+    if(name === "miss"){
+      let enter = document.getElementById('enterName');
+      enter.classList.add('fadeOut');
       setTimeout(()=>{
-        startStep.classList.add('hidden');
-        calendarStep.classList.remove('hidden');
-        calendarStep.classList.add('fadeIn');
+        enter.classList.add('hidden');
+        let cal = document.getElementById('calendar');
+        cal.classList.remove('hidden');
+        cal.classList.add('fadeIn');
+      },1000);
+    } else {
+      alert("Only for Miss ❤️");
+    }
+  };
+
+  document.getElementById('cutBtn').onclick = ()=>{
+    let cakeDiv = document.querySelector('.cake');
+    cakeDiv.classList.add('fadeOut');
+    setTimeout(()=>{
+      cakeDiv.style.display="none";
+      document.getElementById('pieces').style.display="block";
+      setTimeout(()=>{
+        document.getElementById('calendar').classList.add('fadeOut');
         setTimeout(()=>{
-          calendarStep.classList.add('fadeOut');
-          setTimeout(()=>{
-            calendarStep.classList.add('hidden');
-            cakeStep.classList.remove('hidden');
-            cakeStep.classList.add('fadeIn');
-          },1000);
-        },3000);
-      },1000);
-    });
+          document.getElementById('calendar').classList.add('hidden');
+          let card = document.getElementById('card');
+          card.classList.remove('hidden');
+          card.classList.add('fadeIn');
+        },1000);
+      },2000);
+    },1000);
+  };
 
-    document.getElementById('cake').addEventListener('click', ()=>{
-      cakeStep.classList.add('fadeOut');
+  document.getElementById('cardInner').onclick = ()=>{
+    document.getElementById('cardInner').classList.toggle('flipped');
+    setTimeout(()=>{
+      document.getElementById('card').classList.add('fadeOut');
       setTimeout(()=>{
-        cakeStep.classList.add('hidden');
-        cardStep.classList.remove('hidden');
-        cardStep.classList.add('fadeIn');
-        setTimeout(()=>{
-          cardStep.classList.add('fadeOut');
-          setTimeout(()=>{
-            cardStep.classList.add('hidden');
-            giftStep.classList.remove('hidden');
-            giftStep.classList.add('fadeIn');
-            setTimeout(()=>{
-              giftStep.classList.add('fadeOut');
-              setTimeout(()=>{
-                giftStep.classList.add('hidden');
-                wishStep.classList.remove('hidden');
-                wishStep.classList.add('fadeIn');
-              },1000);
-            },2000);
-          },1000);
-        },5000);
+        document.getElementById('card').classList.add('hidden');
+        let wish = document.getElementById('wishBlock');
+        wish.classList.remove('hidden');
+        wish.classList.add('slideIn');
       },1000);
-    });
+    },4000);
+  };
 
-    document.getElementById('wishBtn').addEventListener('click', ()=>{
-      wishStep.classList.add('fadeOut');
+  document.getElementById('wishBtn').onclick = ()=>{
+    document.getElementById('wishText').classList.remove('hidden');
+    document.getElementById('wishText').classList.add('fadeIn');
+    setTimeout(()=>{
+      document.getElementById('wishBlock').classList.add('fadeOut');
       setTimeout(()=>{
-        wishStep.classList.add('hidden');
-        finalStep.classList.remove('hidden');
-        finalStep.classList.add('fadeIn');
+        document.getElementById('wishBlock').classList.add('hidden');
+        document.getElementById('ending').classList.remove('hidden');
+        document.getElementById('ending').classList.add('fadeIn');
       },1000);
-    });
-  </script>
+    },4000);
+  };
+</script>
+
 </body>
-                                 </html>
+  </html>
