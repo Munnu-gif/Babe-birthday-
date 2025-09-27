@@ -1,384 +1,412 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Happy Birthday Jana 🎂</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;900&family=Great+Vibes&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg1:#ffd6e7; --bg2:#ff9ccf; --accent:#ff2d9f; --dark:#0b0b0b;
-    --glass:rgba(255,255,255,0.08);
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%;margin:0;font-family:"Poppins",system-ui; background: linear-gradient(135deg,var(--bg1),var(--bg2)); background-size:300% 300%; animation:bgMove 18s linear infinite; overflow-x:hidden; color:#111}
-  @keyframes bgMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Princess!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
 
-  /* Top title */
-  .topbar{ position:fixed; top:18px; left:0; right:0; display:flex; justify-content:center; z-index:30; pointer-events:none;}
-  .top-title{ pointer-events:auto; background:transparent; padding:6px 12px; border-radius:12px; }
-  .top-title h1{ margin:0; font-family:"Great Vibes",cursive; color:#fff; font-size:40px; text-shadow:0 10px 30px rgba(0,0,0,0.25) }
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f06d8a, #ffbbbb); /* Lovely romantic gradient */
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
 
-  /* Calendar pinned left */
-  .calendar{ position:fixed; top:22px; left:22px; width:220px; padding:16px; border-radius:14px; background:linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06)); backdrop-filter:blur(8px); box-shadow:0 12px 40px rgba(0,0,0,0.25); z-index:28;}
-  .calendar h3{ margin:0 0 8px 0; color:#fff; font-weight:800; letter-spacing:0.6px }
-  .cal-grid{ display:grid; grid-template-columns: repeat(7, 1fr); gap:6px; }
-  .cal-cell{ width:26px; height:26px; display:flex; align-items:center; justify-content:center; font-size:13px; color:#fff; opacity:0.95; background:rgba(255,255,255,0.04); border-radius:6px; }
-  .cal-cell.heart{ background:linear-gradient(90deg,#ff7cb6,#ff4da6); box-shadow:0 8px 18px rgba(255,77,166,0.2); position:relative; font-weight:800;}
-  .cal-cell.heart::after{ content:"27"; position:absolute; font-size:12px; top:2px; right:4px; color:#fff; font-weight:900; }
-  .cal-cell.heart::before{ content:"❤"; position:absolute; left:5px; top:3px; font-size:12px; }
+        .card-container {
+            perspective: 1000px;
+            width: 350px; /* Slightly wider for better content display */
+            height: 500px;
+            position: relative;
+        }
 
-  /* Start screen center */
-  #startScreen{ min-height:100vh; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px; transition:opacity .6s ease, transform .6s ease; z-index:20; }
-  .start-box{ background:rgba(255,255,255,0.06); padding:28px; border-radius:18px; box-shadow:0 18px 50px rgba(0,0,0,0.18); text-align:center; }
-  .start-box h2{ margin:0 0 10px 0; color:#fff; font-size:22px }
-  input#name{ padding:12px 14px; font-size:16px; border-radius:12px; border:none; outline:none; width:260px }
-  button#openBtn{ margin-top:10px; padding:10px 18px; border-radius:999px; border:none; background:linear-gradient(90deg,var(--accent),#ff6fa3); color:#fff; font-weight:800; cursor:pointer; }
-  .hint{ color:rgba(255,255,255,0.9); font-size:13px; margin-top:8px }
+        .card {
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            position: relative;
+            transform-origin: left center;
+        }
 
-  /* Main scene layout */
-  main#scene{ min-height:100vh; display:none; align-items:center; justify-content:center; padding:140px 24px 80px; position:relative; z-index:10 }
-  .stage{ display:flex; gap:40px; align-items:center; justify-content:center; width:100%; max-width:1100px; margin:0 auto; flex-wrap:wrap }
+        .card.open {
+            transform: rotateY(-130deg); /* Opens the card to show inside */
+        }
 
-  /* cake column */
-  .col{ display:flex; flex-direction:column; align-items:center; gap:12px; }
-  .plate{ width:300px; height:22px; border-radius:50px; background:linear-gradient(90deg,#fff6,#fff2); box-shadow:0 12px 30px rgba(0,0,0,0.12)}
-  .cake{ width:260px; border-radius:40px; padding:18px; background:linear-gradient(180deg,#ffd6e7,#ff9ccf); box-shadow:0 18px 50px rgba(0,0,0,0.2); position:relative; overflow:visible }
-  .layer{ width:100%; height:40px; border-radius:20px; margin:6px 0; box-shadow: inset 0 -8px 14px rgba(0,0,0,0.06) }
-  .l1{ background:linear-gradient(90deg,#ffb6d9,#ff9ccf); }
-  .l2{ background:linear-gradient(90deg,#ffccd9,#ffbcd3); transform:translateY(-8px) }
-  .l3{ background:linear-gradient(90deg,#ffdfe9,#ffcfe0); transform:translateY(-16px) }
-  .candle{ position:absolute; top:-48px; left:50%; transform:translateX(-50%); width:14px; height:48px; background:linear-gradient(180deg,#fff,#ffd); border-radius:6px; box-shadow: 0 8px 18px rgba(0,0,0,0.12)}
-  .flame{ position:absolute; top:-74px; left:50%; transform:translateX(-50%); font-size:28px; filter:drop-shadow(0 6px 12px rgba(255,160,200,0.3)); animation:f 0.6s infinite alternate; }
-  @keyframes f{0%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.18)}}
+        .face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            color: #333;
+            text-align: center;
+        }
 
-  .cutBtn{ margin-top:6px; padding:10px 18px; border-radius:999px; border:none; background:linear-gradient(90deg,#ff4da6,#ff2d9f); color:#fff; font-weight:800; cursor:pointer; box-shadow:0 12px 30px rgba(255,77,166,0.16) }
+        .front {
+            z-index: 2;
+            background: #ffe6f2 url('https://www.transparenttextures.com/patterns/hearts.png') repeat; /* Subtle heart pattern */
+            border: 5px solid #ffbbbb;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+        }
 
-  /* pieces animation */
-  .pieces{ display:flex; gap:12px; margin-top:12px; opacity:0; transform:translateY(10px); transition:all 600ms ease }
-  .piece{ width:86px; height:86px; border-radius:14px; background:linear-gradient(90deg,#fff6,#fff2); display:flex; align-items:center; justify-content:center; font-size:36px; box-shadow:0 12px 40px rgba(0,0,0,0.12) }
+        .front h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #d14777;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
 
-  /* card area */
-  .card-outer{ width:460px; perspective:1200px; display:flex; align-items:center; justify-content:center; }
-  .card{ width:420px; height:220px; border-radius:18px; position:relative; transform-style:preserve-3d; transition: transform 900ms cubic-bezier(.2,.9,.25,1); box-shadow:0 20px 60px rgba(0,0,0,0.25) }
-  .front,.back{ position:absolute; inset:0; border-radius:18px; backface-visibility:hidden; display:flex; align-items:center; justify-content:center; padding:18px; box-sizing:border-box }
-  .front{ background:var(--dark); color:#fff; font-weight:900; font-size:26px; text-transform:uppercase; letter-spacing:1px; text-align:center }
-  .back{ transform:rotateY(180deg); background:linear-gradient(180deg,#fff6f9,#ffeff6); color:#111; text-align:left; padding:22px; line-height:1.5; font-weight:500 }
-  .card.flipped{ transform:rotateY(180deg) }
+        .front .emoji-section {
+            display: flex;
+            align-items: center;
+            font-size: 3.5em; /* Larger emojis */
+            margin-bottom: 20px;
+            min-height: 100px; /* Ensure space for animations */
+        }
 
-  /* close control: appears on back inside top-right */
-  .close-btn{ position:absolute; top:12px; right:12px; background:rgba(0,0,0,0.18); color:white; border:none; border-radius:8px; padding:6px 8px; cursor:pointer; z-index:40 }
+        .front .emoji {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            position: relative;
+            animation-delay: 0s; /* Will be set by JS */
+        }
 
-  /* wish center */
-  .wish-center{ display:flex; flex-direction:column; align-items:center; gap:10px; margin-top:10px; }
-  .wish-btn{ padding:12px 18px; border-radius:12px; border:none; background:linear-gradient(90deg,#ff6fa3,#ff2d9f); color:#fff; font-weight:800; cursor:pointer; box-shadow:0 12px 30px rgba(255,77,166,0.16) }
-  .wish-text{ font-size:18px; color:#111; background:linear-gradient(90deg,#fff 40%, #ffd6e7 100%); -webkit-background-clip:text; background-clip:text; color:transparent; font-weight:800; opacity:0; transform:translateY(10px); transition:all 600ms ease }
+        .front .emoji.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-  .wish-text.show{ opacity:1; transform:translateY(0) }
+        .front .emoji span {
+            display: block;
+            font-size: 0.4em; /* Smaller text below emoji */
+            color: #555;
+            margin-top: 5px;
+            font-family: 'Poppins', sans-serif;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        }
 
-  .ending{ margin-top:18px; font-size:28px; font-weight:900; color:#fff; display:none; text-shadow:0 12px 40px rgba(0,0,0,0.22) }
+        .front .emoji span.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-  /* teddy */
-  .teddy{ position:fixed; right:18px; bottom:18px; width:110px; height:110px; z-index:35; border-radius:14px; box-shadow:0 12px 40px rgba(0,0,0,0.25); background:#fff; display:flex; align-items:center; justify-content:center; overflow:hidden }
+        .gift-box-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
 
-  /* helpers */
-  .hidden{ display:none !important }
-  .center-inline{ display:flex; align-items:center; justify-content:center }
+        .gift-box-section.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-  /* responsive */
-  @media (max-width:900px){
-    .stage{ flex-direction:column; gap:22px }
-    .calendar{ left:12px; width:180px }
-    .card{ width:88%; height:260px }
-    .front{ font-size:20px }
-  }
-</style>
+        .gift-box-section button {
+            background-color: #ff69b4; /* Hot pink */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border-radius: 30px;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin-top: 15px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .gift-box-section button:hover {
+            background-color: #e04b9e;
+            transform: translateY(-2px);
+        }
+
+        .gift-box-section button:active {
+            transform: translateY(0);
+        }
+
+        .back {
+            transform: rotateY(180deg);
+            background: #fffafa; /* Slightly off-white for inside */
+            padding: 30px;
+            justify-content: flex-start;
+            align-items: flex-start;
+            text-align: left;
+            overflow-y: auto; /* In case the message is long */
+        }
+
+        .back h2 {
+            font-family: 'Dancing Script', cursive;
+            color: #d14777;
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .back p {
+            font-family: 'Poppins', sans-serif;
+            color: #555;
+            font-size: 1.05em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .back textarea {
+            width: calc(100% - 20px);
+            min-height: 80px;
+            padding: 10px;
+            border: 1px solid #ffbbbb;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1em;
+            color: #333;
+            resize: vertical;
+            margin-top: 10px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .sparkle-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+            display: none; /* Hidden by default */
+            z-index: 100;
+        }
+
+        .sparkle {
+            position: absolute;
+            background-color: gold;
+            border-radius: 50%;
+            opacity: 0;
+            animation: sparkle-blast 1s forwards;
+        }
+
+        @keyframes sparkle-blast {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+                top: var(--y);
+                left: var(--x);
+                filter: blur(2px);
+            }
+        }
+
+        /* Waving animation for the boy emoji */
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(15deg); }
+            75% { transform: rotate(-15deg); }
+        }
+
+        .emoji-boy.waving {
+            animation: wave 0.8s ease-in-out infinite;
+            transform-origin: bottom center; /* Pivot point for waving */
+        }
+
+    </style>
 </head>
 <body>
-
-  <!-- Top title -->
-  <div class="topbar"><div class="top-title"><h1>Happy Birthday Meri Sehzadii Ji ✨</h1></div></div>
-
-  <!-- Calendar pinned -->
-  <div class="calendar" aria-hidden="false">
-    <h3>September 2025</h3>
-    <div class="cal-grid">
-      <!-- simplified static grid - heart on 27 -->
-      <div class="cal-cell"></div><div class="cal-cell">1</div><div class="cal-cell">2</div><div class="cal-cell">3</div>
-      <div class="cal-cell">4</div><div class="cal-cell">5</div><div class="cal-cell">6</div>
-      <div class="cal-cell">7</div><div class="cal-cell">8</div><div class="cal-cell">9</div><div class="cal-cell">10</div>
-      <div class="cal-cell">11</div><div class="cal-cell">12</div><div class="cal-cell">13</div><div class="cal-cell">14</div>
-      <div class="cal-cell">15</div><div class="cal-cell">16</div><div class="cal-cell">17</div><div class="cal-cell">18</div>
-      <div class="cal-cell">19</div><div class="cal-cell">20</div><div class="cal-cell">21</div><div class="cal-cell">22</div>
-      <div class="cal-cell">23</div><div class="cal-cell">24</div><div class="cal-cell">25</div><div class="cal-cell">26</div>
-      <div class="cal-cell heart" title="27 Sept - Special"></div>
-      <div class="cal-cell">28</div><div class="cal-cell">29</div><div class="cal-cell">30</div>
-    </div>
-  </div>
-
-  <!-- Start screen -->
-  <section id="startScreen" class="center-block">
-    <div class="start-box center-inline" style="flex-direction:column">
-      <h2>Enter Her Name to Unlock 🎁</h2>
-      <input id="name" placeholder="Type her name..." aria-label="name">
-      <button id="openBtn">Open Surprise</button>
-      <div class="hint">Type <strong>Miss</strong> to unlock 💖</div>
-    </div>
-  </section>
-
-  <!-- Main scene -->
-  <main id="scene">
-    <div class="stage">
-
-      <!-- cake column -->
-      <div class="col center-inline">
-        <div class="plate"></div>
-        <div class="cake" id="cakeArea" aria-hidden="false">
-          <div class="candle"></div>
-          <div class="flame">🔥</div>
-          <div class="layer l1"></div>
-          <div class="layer l2"></div>
-          <div class="layer l3"></div>
-        </div>
-        <button id="cutBtn" class="cutBtn">Tap / Cut Cake 🎂</button>
-        <div class="pieces" id="pieces">
-          <div class="piece">🍰</div>
-          <div class="piece">🍰</div>
-          <div class="piece">🍰</div>
-        </div>
-      </div>
-
-      <!-- DIY card column -->
-      <div class="col center-inline" style="align-items:center">
-        <div class="card-outer" id="cardArea" style="display:none">
-          <div class="card" id="card">
-            <div class="front">
-              <div>
-                <div style="font-size:13px; color:rgba(255,255,255,0.8); letter-spacing:1px;margin-bottom:6px">A little surprise</div>
-                <div style="font-family:'Great Vibes',cursive; font-size:34px; letter-spacing:1px">HAPPY BIRTHDAY JANA 💗</div>
-              </div>
+    <div class="card-container">
+        <div id="birthdayCard" class="card">
+            <div class="face front">
+                <h1>Happy Birthday, Princess!</h1>
+                <div class="emoji-section">
+                    <div class="emoji emoji-boy">🙋
+                        <span id="boy-text"></span>
+                    </div>
+                    <div class="emoji emoji-princess">👸🏻
+                        <span id="princess-text"></span>
+                    </div>
+                </div>
+                <div class="gift-box-section">
+                    <p>🎁 See your surprise gift!</p>
+                    <button id="viewGiftBtn">Click Me!</button>
+                </div>
             </div>
-            <div class="back" id="cardBack">
-              <button class="close-btn" id="closeCard">✖</button>
-              <div style="max-height:160px; overflow:auto; padding-right:6px">
-                <p style="font-weight:800; margin:0 0 8px 0">To my dearest Jana,</p>
-                <p style="margin:0 0 8px 0; line-height:1.5">
-                  Munnu jii, hum aapka birthday saath nahi mana paayenge lekin humari duayein aur pyaar hamesha aapke saath hain. 
-                  Har pal khush rahiyega — Aapka jeevan pyaar aur kamyabi se bhara rahe. 
-                      <3 Jaise raat k pass chand k siwaa kuch nhi hai ..
-                             Waise hi humare pass apke siwa kuch nahi .!¿
+            <div class="face back">
+                <h2>My Dearest Princess,</h2>
+                <p>
+                    🎂✨ Happy Birthday My Jaana! ✨🎂
+
+
+
+
+🌸 “Aap meri khushiyon ka sabab ho,
+Aap meri duaon ka rang ho,
+Aap  meri zindagi ki wo roshni ho,
+Jo andheron mein bhi ujala kar deti ho.” 🌸<br>
+
+
+
+
+💖 Dear Mohtarma ji ,
+Aaj ka din mere liye sabse khoobsurat hai, kyunki is din meri duniya ki sabse pyari ladki paida hui thi. Aap  meri har dua ka jawab hain,meri muskaan ho, aur meri zindagi ka sabse khoobsurat tohfa ho.<br>
+
+
+
+
+💍 My Promises to You: 💍
+ Hamesha Aapki muskaan meri pehli dua hogi. Har mushkil mein Aapke saath khada rahunga aapko kabhi akela feel nahi karne dunga.Mera pyaar Aapke liye hamesha badhta rahega.<br>
+
+
+
+
+🔥 “Main Aapse ek wada karta hoon,
+Na door rahunga, na kabhi bewafa banunga,
+Aap meri zindagi ki wo dua ho,
+Jise main roz khuda se maangunga.” 🔥<br>
+
+
+
+
+🌹 Thank You My Love… 🌹
+Aapne meri zindagi ko sabse khoobsurat bana diya.
+Mujhe samjhne ke liye, mujhe itna pyaar dene ke liye,
+Aur meri duniya ko muskaan se bhar dene ke liye,
+Meri rooh ki gehraiyon se Thank You.<br>
+
+
+
+
+🌟 “Aap meri zindagi ka wo geet ho,
+Jisme sirf mohabbat ke sur bajte hain,
+Main aapse aaj bhi utna hi pyaar karta hoon,
+Jitna kal karta tha… aur kal bhi karta rahunga.” 🌟<br>
+
+
+
+
+🎁 Happy Birthday My Love ❤️
+Aap meri  mohabbat ho, meri aakhri dua ho,Aap meri Jine ki wajah ho,
+Aur meri hamesha ki zindagi ho.
+
+
+
+Forever Yours,
+✨ FAIBA 💕
+
+  
                 </p>
-                <p style="margin:0 0 8px 0; line-height:1.4;">
-                  Hamesha aapka intezaar karenge aur kabhi chodkar nahi jayenge.
-                  Take care meri pyaari sehzadi. <br><br> — With love, Bandar Khan Ji.
-                </p>
-                <!-- optional images area; will load only if user uploads images to /images/ folder -->
-                <div id="photoStrip" style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap"></div>
-              </div>
+                <textarea placeholder="Write your personal message here..."></textarea>
+                <p style="margin-top: 20px; text-align: right;">With all my love,</p>
+                <p style="text-align: right; font-family: 'Dancing Script', cursive; font-size: 1.5em; color: #d14777;">[Your Name Here]</p>
+                <button style="margin-top: 20px; background-color: #ff69b4; color: white; border: none; padding: 10px 20px; font-size: 1em; border-radius: 25px; cursor: pointer; float: right;" onclick="document.getElementById('birthdayCard').classList.remove('open');">Close Card</button>
             </div>
-          </div>
         </div>
-
-        <!-- wish center hidden until card closed -->
-        <div id="wishBlock" style="display:none; align-items:center;">
-          <div class="wish-center">
-            <button id="wishBtn" class="wish-btn">My Wish 💌</button>
-            <div id="wishText" class="wish-text">Hamesha mere sath rahiye… chahe jitni bhi mushkilein aaye. Mera intezaar kariyega… ❤️</div>
-          </div>
-        </div>
-
-        <div id="ending" class="ending">Take care Miss Ji — Celebrate & Enjoy Your Day ❣️</div>
-
-      </div>
-
     </div>
-  </main>
 
-  <!-- teddy fixed -->
-  <div class="teddy" id="teddyWrap" title="A little teddy for Jana">
-    <img id="teddyGif" src="https://media.tenor.com/0c6QpN7PxE4AAAAi/teddy-bear-love.gif" alt="teddy" style="width:100%;height:100%;object-fit:cover;border-radius:12px" />
-  </div>
+    <div id="sparkleContainer" class="sparkle-container"></div>
 
-<script>
-/* --------------- safety and helpers --------------- */
-function onImageErrorReplace(el, label){
-  if(!el) return;
-  el.onerror = null;
-  el.style.display='flex';
-  el.style.alignItems='center';
-  el.style.justifyContent='center';
-  el.style.background='#ffe7f3';
-  el.innerHTML = label || 'Image';
-}
+    <script>
+        const birthdayCard = document.getElementById('birthdayCard');
+        const boyEmoji = document.querySelector('.emoji-boy');
+        const princessEmoji = document.querySelector('.emoji-princess');
+        const boyText = document.getElementById('boy-text');
+        const princessText = document.getElementById('princess-text');
+        const giftBoxSection = document.querySelector('.gift-box-section');
+        const viewGiftBtn = document.getElementById('viewGiftBtn');
+        const sparkleContainer = document.getElementById('sparkleContainer');
 
-/* --------------- unlock logic --------------- */
-const startScreen = document.getElementById('startScreen');
-const openBtn = document.getElementById('openBtn');
-const nameInput = document.getElementById('name');
+        let animationDelay = 0;
 
-const scene = document.getElementById('scene');
-openBtn.addEventListener('click', ()=> unlock());
-nameInput.addEventListener('keydown', (e)=> { if(e.key==='Enter') unlock(); });
+        // Sequence of animations
+        function animateEmojis() {
+            // Boy appears and waves
+            setTimeout(() => {
+                boyEmoji.classList.add('animate');
+                boyEmoji.classList.add('waving'); // Start waving
+                boyText.textContent = "Hey Princess, Happy Birthday!";
+                boyText.classList.add('animate');
+            }, animationDelay);
+            animationDelay += 1500; // Delay for next animation
 
-function unlock(){
-  const val = (nameInput.value || '').trim().toLowerCase();
-  if(val !== 'miss'){
-    alert("This surprise is for Miss only 💖");
-    nameInput.focus();
-    return;
-  }
-  // fade out start
-  startScreen.style.transition = 'opacity .7s ease, transform .7s ease';
-  startScreen.style.opacity = '0';
-  startScreen.style.transform = 'scale(.98)';
-  setTimeout(()=> startScreen.style.display='none', 720);
+            // Princess appears
+            setTimeout(() => {
+                boyEmoji.classList.remove('waving'); // Stop waving
+                princessEmoji.classList.add('animate');
+                princessText.textContent = "Thank you so much!";
+                princessText.classList.add('animate');
+            }, animationDelay);
+            animationDelay += 1500;
 
-  // show main scene after short delay (let fade feel)
-  setTimeout(()=> {
-    scene.style.display = 'flex';
-    // slow reveal of calendar and cake present already (calendar pinned)
-    document.getElementById('cakeArea').scrollIntoView({behavior:'smooth', block:'center'});
-    // teddy does pop animation
-    const t = document.getElementById('teddyWrap');
-    t.style.transform='scale(.2)';
-    t.style.transition='transform .9s cubic-bezier(.2,.9,.25,1)';
-    setTimeout(()=> t.style.transform='scale(1)', 100);
-  }, 800);
-}
+            // Gift box appears
+            setTimeout(() => {
+                giftBoxSection.classList.add('animate');
+            }, animationDelay);
+        }
 
-/* --------------- cake cut animation --------------- */
-const cutBtn = document.getElementById('cutBtn');
-const cake = document.getElementById('cakeArea');
-const pieces = document.getElementById('pieces');
-const cardArea = document.getElementById('cardArea');
-const card = document.getElementById('card');
-const cardBack = document.getElementById('cardBack');
-const closeCard = document.getElementById('closeCard');
-const wishBlock = document.getElementById('wishBlock');
-const wishBtn = document.getElementById('wishBtn');
-const wishText = document.getElementById('wishText');
-const ending = document.getElementById('ending');
+        // Sparkle blast effect
+        function createSparkles(count = 30) {
+            sparkleContainer.style.display = 'block'; // Show container
+            for (let i = 0; i < count; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                const size = Math.random() * 10 + 5; // Sparkle size 5-15px
+                sparkle.style.width = `${size}px`;
+                sparkle.style.height = `${size}px`;
+                sparkle.style.backgroundColor = `hsl(${Math.random() * 60 + 30}, 100%, 70%)`; // Golds and oranges
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight;
+                sparkle.style.setProperty('--x', `${x}px`);
+                sparkle.style.setProperty('--y', `${y}px`);
+                sparkle.style.left = `${window.innerWidth / 2}px`; // Start from center
+                sparkle.style.top = `${window.innerHeight / 2}px`; // Start from center
+                sparkle.style.animationDelay = `${Math.random() * 0.2}s`; // Stagger animation start
+                sparkleContainer.appendChild(sparkle);
 
-cutBtn.addEventListener('click', ()=> {
-  cutBtn.disabled = true;
-  cutBtn.style.opacity = .7;
+                // Remove sparkle after animation to clean up DOM
+                sparkle.addEventListener('animationend', () => {
+                    sparkle.remove();
+                    if (sparkleContainer.children.length === 0) {
+                        sparkleContainer.style.display = 'none'; // Hide container if all removed
+                    }
+                });
+            }
+        }
 
-  // animate cake subtle tilt -> fade -> show pieces
-  cake.style.transition = 'transform 700ms ease, opacity 700ms ease';
-  cake.style.transform = 'rotate(-4deg) scale(.98)';
-  setTimeout(()=> cake.style.opacity = '0', 600);
+        // Event listener for opening the card
+        viewGiftBtn.addEventListener('click', () => {
+            viewGiftBtn.disabled = true; // Prevent multiple clicks
+            createSparkles(); // Trigger sparkles
+            setTimeout(() => {
+                birthdayCard.classList.add('open');
+                viewGiftBtn.disabled = false; // Re-enable if needed, or remove
+            }, 400); // After 0.4 seconds, open the card
+        });
 
-  // show pieces after short delay
-  setTimeout(()=> {
-    pieces.style.opacity = 1;
-    pieces.style.transform = 'translateY(0)';
-    pieces.style.transition = 'all 600ms ease';
-    pieces.style.visibility = 'visible';
+        // Start the emoji animations when the page loads
+        document.addEventListener('DOMContentLoaded', animateEmojis);
 
-    // small sparkle/fireworks bursts
-    burst(26);
-
-    // after pieces shown, show card front (centered) with gentle reveal
-    setTimeout(()=> {
-      pieces.style.opacity = 0;
-      pieces.style.visibility = 'hidden';
-      cardArea.style.display = 'flex';
-      cardArea.scrollIntoView({behavior:'smooth', block:'center'});
-      // small pop
-      card.style.transform = 'scale(.96)';
-      setTimeout(()=> card.style.transform = 'scale(1)', 60);
-    }, 1500);
-
-  }, 900);
-});
-
-/* fireworks burst helper */
-function burst(count){
-  for(let i=0;i<count;i++){
-    const d = document.createElement('div');
-    d.style.position='fixed';
-    d.style.left = (10 + Math.random()*80) + 'vw';
-    d.style.top = (10 + Math.random()*70) + 'vh';
-    d.style.width = '8px';
-    d.style.height = '8px';
-    d.style.borderRadius = '50%';
-    d.style.zIndex = 60;
-    d.style.background = `hsl(${Math.random()*360} 90% 60%)`;
-    d.style.opacity = 1;
-    d.style.transform = 'scale(0.6)';
-    d.style.transition = 'all 900ms ease-out';
-    document.body.appendChild(d);
-    setTimeout(()=> {
-      d.style.transform = `translate(${(Math.random()-0.5)*200}px, ${(Math.random()-0.5)*200}px) scale(1.6)`;
-      d.style.opacity = 0;
-    }, 20 + Math.random()*60);
-    setTimeout(()=> d.remove(), 1200);
-  }
-}
-
-/* card flip and close logic */
-card.addEventListener('click', (e)=>{
-  // if click on close button, ignore flip (close handles)
-  if(e.target && e.target.id === 'closeCard') return;
-  card.classList.toggle('flipped');
-  // after flip (reveal inside) wait a bit then allow user to close
-});
-
-closeCard.addEventListener('click', (e)=>{
-  e.stopPropagation();
-  // slide the whole cardArea to right (not just hide) to mimic "move aside"
-  cardArea.style.transition = 'transform 700ms ease, opacity 700ms ease';
-  cardArea.style.transform = 'translateX(120%) scale(.96)';
-  cardArea.style.opacity = 0;
-  setTimeout(()=> {
-    cardArea.style.display = 'none';
-    // show wish button center after small delay so feeling stays
-    setTimeout(()=> {
-      wishBlock.style.display = 'flex';
-      wishBlock.scrollIntoView({behavior:'smooth', block:'center'});
-    }, 300);
-  }, 720);
-});
-
-/* wish */
-wishBtn.addEventListener('click', ()=>{
-  wishText.classList.add('show');
-  burst(18);
-  setTimeout(()=> {
-    // hide wish block and show final ending message
-    wishBlock.style.display = 'none';
-    ending.style.display = 'block';
-    ending.scrollIntoView({behavior:'smooth', block:'center'});
-  }, 2200);
-});
-
-/* teddy fallback (if GIF fails) */
-const teddy = document.getElementById('teddyGif');
-teddy.addEventListener('error', ()=> {
-  const wrap = document.getElementById('teddyWrap');
-  wrap.innerHTML = '<div style="padding:12px; text-align:center; font-weight:800; color:#ff4da6">🐻</div>';
-});
-
-/* optional: load user photos into card if uploaded to images/pic1.jpg etc */
-(function loadUserPhotos(){
-  const strip = document.getElementById('photoStrip');
-  const names = ['pic1.jpg','pic2.jpg','pic3.jpg']; // if user uploads to /images/ these will show
-  names.forEach(n=>{
-    const img = document.createElement('img');
-    img.src = 'images/' + n;
-    img.alt = n;
-    img.style.width = '90px';
-    img.style.height = '90px';
-    img.style.objectFit = 'cover';
-    img.style.borderRadius = '8px';
-    img.style.boxShadow = '0 8px 20px rgba(0,0,0,0.12)';
-    img.onerror = ()=> { img.remove(); }; // silently remove if not present
-    strip.appendChild(img);
-  });
-})();
-
-/* ensure page focuses input initially */
-window.addEventListener('load', ()=> name.focus && name.focus());
-</script>
+    </script>
 </body>
-</html>
+  </html>
